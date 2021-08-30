@@ -2,6 +2,5 @@
   "name": "Lonestar",
   "description": "Atek's primary web interface.",
   "author": "Paul Frazee <pfrazee@gmail.com>",
-  "license": "MIT",
-  "runtime": "node"
+  "license": "MIT"
 }
