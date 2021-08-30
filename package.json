@@ -4,11 +4,9 @@
   "type": "module",
   "description": "Atek's primary web interface.",
   "scripts": {
-    "build": "rollup -c",
+    "build": "echo ''",
     "tailwind": "node ./scripts/generate-themes.js && npx tailwindcss-cli@latest build -o static/css/tailwind.css",
     "build-prod": "node ./scripts/generate-sw.js && npm run build && NODE_ENV=production npm run tailwind",
-    "prepare": "echo ''",
-    "postpublish": "echo ''",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
