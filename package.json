@@ -1,0 +1,31 @@
+{
+  "name": "@atek-cloud/lonestar",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Atek's primary web interface.",
+  "scripts": {
+    "build": "rollup -c",
+    "tailwind": "node ./scripts/generate-themes.js && npx tailwindcss-cli@latest build -o static/css/tailwind.css",
+    "build-prod": "node ./scripts/generate-sw.js && npm run build && NODE_ENV=production npm run tailwind",
+    "prepare": "echo ''",
+    "postpublish": "echo ''",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atek-cloud/lonestar.git"
+  },
+  "devDependencies": {
+    "rollup": "^2.36.1",
+    "tailwindcss": "^2.1.4"
+  },
+  "author": "Paul Frazee <pfrazee@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/atek-cloud/lonestar/issues"
+  },
+  "homepage": "https://github.com/atek-cloud/lonestar#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
