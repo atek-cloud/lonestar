@@ -34,7 +34,7 @@ class AppSelectDbView extends LitElement {
     try {
       this.reqId = (new URLSearchParams(location.search)).get('reqId')
       this.dbRequest = await (await fetch(`/_api/cloud/db/request/${this.reqId}`)).json()
-      this.app = (await session.api.apps.get(this.dbRequest.appId))?.app
+      this.app = (await session.api.services_get(this.dbRequest.appId))?.app
 
       const rootBucket = await session.api.cloud.getBucket('root')
       const appBuckets = rootBucket.items.filter(item => item.type === 'app-bucket')

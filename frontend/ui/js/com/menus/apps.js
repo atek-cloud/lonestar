@@ -20,7 +20,7 @@ export function create ({parent, x, y}) {
 export class AppsMenu extends LitElement {
   static get properties () {
     return {
-      apps: {type: Object}
+      services: {type: Object}
     }
   }
 
@@ -30,16 +30,16 @@ export class AppsMenu extends LitElement {
 
   constructor () {
     super()
-    this.apps = undefined
+    this.services = undefined
     this.load()
   }
 
   async load () {
-    this.apps = (await session.api.apps.list())?.apps
+    this.services = (await session.api.services_list())?.services
   }
 
-  get activeApps () {
-    return (this.apps || [])
+  get activeServices () {
+    return (this.services || [])
   }
 
   // rendering
@@ -78,23 +78,23 @@ export class AppsMenu extends LitElement {
         }
       </style>
       <div class="container">
-        ${this.apps ? html`
-          ${repeat(this.activeApps, app => app.id, (app, i) => html`
-            <a class="block text-center" href="http://localhost:${app.port}/">
-              <img src="/img/fake${i+1}.png">
-              <span>${app.manifest?.name || app.id}</span>
+        ${this.services ? html`
+          ${repeat(this.activeServices, srv => srv.id, (srv, i) => html`
+            <a class="block text-center" href="http://${srv.settings.id}.localhost/">
+              <img src="/img/todo.png">
+              <span>${srv.settings.manifest?.name || srv.settings.id}</span>
             </a>
           `)}
           <a class="block text-center" href="/p/install-app">
-            <img src="/img/install.png">
+            <img src="/img/todo.png">
             <span>Install App</span>
           </a>
           <a class="block text-center" href="/p/cloud">
-            <img src="/img/cloud.png">
+            <img src="/img/todo.png">
             <span>My Cloud</span>
           </a>
           <a class="block text-center" href="/p/apps">
-            <img src="/img/settings.png">
+            <img src="/img/todo.png">
             <span>Settings</span>
           </a>
         ` : ''}

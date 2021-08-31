@@ -40,11 +40,11 @@ class AppCloudView extends LitElement {
     this.bucket = (await (await fetch(`/_api/cloud/bucket/${this.bucketId}`)).json())
   }
 
-  updated (changedProperties) {
-    if (changedProperties.has('currentPath')) {
-      console.log('hit', this.currentPath)
-    }
-  }
+  // updated (changedProperties) {
+  //   if (changedProperties.has('currentPath')) {
+  //     console.log('hit', this.currentPath)
+  //   }
+  // }
 
   async refresh () {
   }
@@ -91,21 +91,21 @@ class AppCloudView extends LitElement {
       return html`
         <div class="mb-4 relative">
           <img class="block mx-auto mb-4" src="/img/user.png" style="width: 40px; height: 40px">
-          <img class="absolute rounded-full object-fit border border-inverse" src="/img/tmp3.jpg" style="right: calc(50% - 26px); bottom: 0; width: 24px; height: 24px;">
+          <img class="absolute rounded-full object-fit border border-inverse" src="/img/default-user-thumb.jpg" style="right: calc(50% - 26px); bottom: 0; width: 24px; height: 24px;">
         </div>
       `
     }
     if (item.type === 'system-trash') {
-      return html`<img class="block mx-auto mb-4" src="/img/trash.png" style="width: 40px; height: 40px">`
+      return html`<img class="block mx-auto mb-4" src="/img/todo.png" style="width: 40px; height: 40px">`
     }
     if (item.type === 'system-db') {
-      return html`<img class="block mx-auto mb-4" src="/img/workstation.png" style="width: 40px; height: 40px">`
+      return html`<img class="block mx-auto mb-4" src="/img/todo.png" style="width: 40px; height: 40px">`
     }
     if (item.type === 'app-bucket') {
-      return html`<img class="block mx-auto mb-4" src="/img/app-data.png" style="width: 40px; height: 40px">`
+      return html`<img class="block mx-auto mb-4" src="/img/todo.png" style="width: 40px; height: 40px">`
     }
     return html`
-      <img class="block mx-auto mb-4" src="/img/cloud-folder.png" style="width: 40px; height: 40px">
+      <img class="block mx-auto mb-4" src="/img/todo.png" style="width: 40px; height: 40px">
     `
   }
 

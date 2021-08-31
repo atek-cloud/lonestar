@@ -1,18 +1,19 @@
-// import { API } from '/dev/api-client/index.js' TODO
+import { create as createRpc } from '../../vendor/atek-browser-rpc.js'
 
 let emitter = new EventTarget()
-export let api = new API({origin: location.origin, fetch: (...args) => window.fetch(...args)})
+export let api = createRpc('/_api')
 export let info = undefined
 
 export async function setup () {
   window.api = api
-  api.session.onChange(() => {info = api.session.info})
-  await api.session.setup()
+  info = {
+    username: 'user' // DEBUG
+  }
   loadSecondaryState()
 }
 
 export async function loadSecondaryState () {
-  if (!api.session.isActive()) {
+  if (!isActive()) {
     return
   }
   // TODO - needed?
@@ -20,11 +21,12 @@ export async function loadSecondaryState () {
 }
 
 export function isActive () {
-  return api.session.isActive()
+  return !!info
 }
 
 export function onChange (cb) {
-  return api.session.onChange(cb)
+  emitter.addEventListener('change', cb)
+  // return api.session.onChange(cb)
 }
 
 export function onSecondaryState (cb, opts) {

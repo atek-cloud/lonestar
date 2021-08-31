@@ -20,13 +20,9 @@ export class Header extends LitElement {
 
   render () {
     return html`
-      <div class="flex items-center px-5 py-4 text-default-2 text-lg bg-default shadow relative z-10">
+      <div class="flex items-center pr-5 pl-4 py-2 text-default-2 text-lg bg-default shadow relative z-10">
         <a class="inline-block p-1 mr-3 cursor-pointer" href="/">
-          <div class="relative" style="width: 24px; height: 24px">
-            <div class="absolute rounded-full w-full h-full" style="border: 3px solid var(--color-text-default-2);"></div>
-            <div class="absolute" style="background: var(--color-bg-default); width: 16px; height: 16px; top: -8px; left: calc(50% - 8px); transform: rotate(45deg);"></div>
-            <div class="absolute" style="background: var(--color-text-default-2); width: 3px; height: 12px; top: -1px; left: calc(50% - 2px);"></div>
-          </div>
+          <img src="/img/logo-sm.png">
         </a>
         <div class="flex-1">
           <div class="flex items-center border border-default rounded-full py-1.5 px-1.5 mr-2 max-w-2xl text-sm">
@@ -35,7 +31,7 @@ export class Header extends LitElement {
           </div>
         </div>
         <div class="mx-3"><app-button transparent icon="fas fa-th" @click=${this.onClickAppsMenu}></app-button></div>
-        <img class="inline-block w-8 h-8 rounded-full" src="/img/tmp3.jpg" @click=${this.onClickLogout}>
+        <img class="inline-block w-8 h-8 rounded-full" src="/img/default-user-thumb.jpg" @click=${this.onClickLogout}>
       </div>
     `
   }

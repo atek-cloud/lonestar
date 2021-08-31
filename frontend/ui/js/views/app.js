@@ -11,11 +11,11 @@ const TIMESTAMP_RE = /( (\d)+\/(\d)+\/(\d)+, (\d)+:(\d)+:(\d)+ (AM|PM))/g
 class AppAppView extends LitElement {
   static get properties () {
     return {
-      appId: {type: String},
+      srvId: {type: String},
       currentView: {type: String},
       currentPath: {type: String, attribute: 'current-path'},
       error: {type: String},
-      app: {type: Object},
+      service: {type: Object},
       showLogTimestamps: {type: Boolean},
       updaterState: {type: Object}
     }
@@ -34,8 +34,8 @@ class AppAppView extends LitElement {
     this.updaterState = undefined
   }
 
-  get appName () {
-    return this.app?.manifest?.name || this.appId
+  get srvName () {
+    return this.service?.manifest?.name || this.srvId
   }
 
   async load () {
@@ -47,14 +47,15 @@ class AppAppView extends LitElement {
 
     const pathParts = window.location.pathname.split('/').filter(Boolean)
     let oldView = this.currentView
-    this.appId = pathParts[2]
+    this.srvId = pathParts[2]
     this.currentView = pathParts[3] || 'properties'
-    this.app = (await session.api.apps.get(this.appId))?.app
-    console.log(this.app)
+    this.service = (await session.api.services_get(this.srvId))
+    console.log(this.service)
 
-    if (!this.logStream) {
+    // TODO
+    /*if (!this.logStream) {
       try {
-        this.logStream = await session.api.apps.logStream(this.appId)
+        this.logStream = await session.api.services.logStream(this.srvId)
         this.logStream.addEventListener('data', e => {
           this.log += e.detail.value
           if (this.currentView === 'log') {
@@ -64,7 +65,7 @@ class AppAppView extends LitElement {
       } catch (e) {
         console.debug('Failed to acquire log stream', e)
       }
-    }
+    }*/
 
     if (oldView !== this.currentView && this.currentView === 'log') {
       await this.requestUpdate()
@@ -110,12 +111,12 @@ class AppAppView extends LitElement {
           <div>
             <a class="hover:underline" href="/p/apps"><span class="fas fa-angle-left"></span> Apps</a>
           </div>
-          <h1 class="text-5xl mb-4">${this.appName}</h1>
-          ${this.renderAppHeader()}
+          <h1 class="text-5xl mb-4">${this.srvName}</h1>
+          ${this.renderSrvHeader()}
           <div class="flex border border-default">
             <div class="border-r border-default">
-              <a class="block px-4 py-2 ${this.currentView === 'properties' ? 'bg-default-2' : ''} hover:underline" href="/p/app/${this.appId}">Properties</a>
-              <a class="block px-4 py-2 ${this.currentView === 'log' ? 'bg-default-2' : ''} hover:underline" href="/p/app/${this.appId}/log">Logs</a>
+              <a class="block px-4 py-2 ${this.currentView === 'properties' ? 'bg-default-2' : ''} hover:underline" href="/p/app/${this.srvId}">Properties</a>
+              <a class="block px-4 py-2 ${this.currentView === 'log' ? 'bg-default-2' : ''} hover:underline" href="/p/app/${this.srvId}/log">Logs</a>
             </div>
             <div class="flex-1">
               ${this.renderAppCurrentView()}
@@ -126,21 +127,21 @@ class AppAppView extends LitElement {
     `
   }
 
-  renderAppHeader () {
-    if (!this.app) return html`<div><span class="spinner"></span></div>`
+  renderSrvHeader () {
+    if (!this.service) return html`<div><span class="spinner"></span></div>`
     return html`
       <div class="mb-4">
-        ${this.app.package.sourceType === 'git' ? this.app.package.installedVersion : 'Local folder'}
+        ${this.service.settings.package.sourceType === 'git' ? this.service.settings.package.installedVersion : 'Local folder'}
         |
-        ${this.app.package.sourceType === 'git' ? html`
-          <a class="text-default-3 hover:underline" href=${this.app.sourceUrl} target="_blank">${this.app.sourceUrl}</a>
+        ${this.service.settings.package.sourceType === 'git' ? html`
+          <a class="text-default-3 hover:underline" href=${this.service.settings.sourceUrl} target="_blank">${this.service.settings.sourceUrl}</a>
         ` : html`
-          <span class="text-default-3">${this.app.sourceUrl}</span>
+          <span class="text-default-3">${this.service.settings.sourceUrl}</span>
         `}
       </div>
       <div class="mb-6">
-        <app-button label="Open" href="http://${window.location.hostname}:${this.app.port}" new-window></app-button>
-        ${this.app.package.sourceType === 'git' ? html`<app-button transparent label="Check for updates" @click=${this.onClickCheckUpdates}></app-button>`: ''}
+        <app-button label="Open" href="http://${this.service.settings.id}.${window.location.hostname}" new-window></app-button>
+        ${this.service.settings.package.sourceType === 'git' ? html`<app-button transparent label="Check for updates" @click=${this.onClickCheckUpdates}></app-button>`: ''}
         <app-button transparent label="Uninstall" @click=${this.onClickUninstallApp}></app-button>
         <span class="inline-block">
           <a class="cursor-pointer px-2 py-0.5 hover:bg-default-2" @click=${this.onClickAppMenu}><span class="fas fa-ellipsis-h"></span></a>
@@ -173,7 +174,7 @@ class AppAppView extends LitElement {
   }
 
   renderAppCurrentView () {
-    if (!this.app) return ''
+    if (!this.service) return ''
     if (this.currentView === 'properties') {
       return this.renderAppProperties()
     }
@@ -184,16 +185,16 @@ class AppAppView extends LitElement {
 
   renderAppProperties () {
     return html`
-    ${this.app?.manifest ? html`
+    ${this.service?.manifest ? html`
       <div class="px-5 py-3 border-b border-default text-lg">
-        ${this.app?.manifest?.description ? html`<p>${this.app?.manifest?.description}</p>` : ''}
-        ${this.app?.manifest?.author ? html`<p class="text-sm">By: <strong class="font-medium">${this.app?.manifest?.author}</strong></p>` : ''}
-        ${this.app?.manifest?.license ? html`<p class="text-sm">License: <strong class="font-medium">${this.app?.manifest?.license}</strong></p>` : ''}
+        ${this.service?.manifest?.description ? html`<p>${this.service?.manifest?.description}</p>` : ''}
+        ${this.service?.manifest?.author ? html`<p class="text-sm">By: <strong class="font-medium">${this.service?.manifest?.author}</strong></p>` : ''}
+        ${this.service?.manifest?.license ? html`<p class="text-sm">License: <strong class="font-medium">${this.service?.manifest?.license}</strong></p>` : ''}
       </div>
     ` : ''}
       <div class="px-5 py-3 border-b border-default">
         <p class="text-sm">
-          ${this.app.isActive ? html`
+          ${this.service.status === 'active' ? html`
             <span class="text-secondary"><span class="fas fa-circle"></span> Process is currently running</span>
           ` : html`
             <span class="text-default-4"><span class="fas fa-circle"></span> Process is not currently running</span>
@@ -208,7 +209,7 @@ class AppAppView extends LitElement {
             type="text"
             id="sourceUrl-input"
             name="sourceUrl"
-            value="${this.app.sourceUrl}"
+            value="${this.service.settings.sourceUrl}"
             class="block box-border w-full p-3 mb-1 border border-default rounded"
             placeholder="Enter the Git URL or folder location of your app"
           />
@@ -218,18 +219,18 @@ class AppAppView extends LitElement {
             type="text"
             id="port-input"
             name="port"
-            value="${this.app.port}"
+            value="${this.service.settings.port}"
             class="block box-border w-24 p-3 mb-1 border border-default rounded"
             placeholder=""
           />
-          ${this.app.package.sourceType === 'git' ? html`
+          ${this.service.settings.package.sourceType === 'git' ? html`
             <label class="block font-semibold p-1" for="desiredVersion-input">Desired Version</label>
             <input
               autofocus
               type="text"
               id="desiredVersion-input"
               name="desiredVersion"
-              value="${this.app.desiredVersion}"
+              value="${this.service.settings.desiredVersion}"
               placeholder="latest"
               class="block box-border w-48 p-3 mb-4 border border-default rounded"
             />
@@ -241,7 +242,7 @@ class AppAppView extends LitElement {
             </div>
           ` : ''}
           <div class="text-right">
-            <app-button primary label="Save${this.app.isActive ? ' and restart' : ''}" btn-class="px-4 py-2" @click=${this.onClickSaveProperties}></app-button>
+            <app-button primary label="Save${this.service.settings === 'active' ? ' and restart' : ''}" btn-class="px-4 py-2" @click=${this.onClickSaveProperties}></app-button>
           </div>
         </form>
       </div>
@@ -262,12 +263,12 @@ class AppAppView extends LitElement {
   // events
   // =
 
-  async onClickAppMenu (e) {
+  onClickAppMenu (e) {
     e.preventDefault()
     e.stopPropagation()
     
     let items = []
-    if (this.app.isActive) {
+    if (this.service.status === 'active') {
       items.push({label: 'Restart', click: () => this.onClickRestartApp()})
       items.push({label: 'Stop', click: () => this.onClickStopApp()})
     } else {
@@ -284,56 +285,56 @@ class AppAppView extends LitElement {
 
   async onClickStartApp (e) {
     e?.preventDefault()
-    await session.api.apps.start(this.appId)
+    await session.api.services_start(this.srvId)
     this.load()
   }
 
   async onClickRestartApp (e) {
     e?.preventDefault()
-    await session.api.apps.restart(this.appId)
+    await session.api.services_restart(this.srvId)
     this.load()
   }
 
   async onClickStopApp (e) {
     e?.preventDefault()
-    await session.api.apps.stop(this.appId)
+    await session.api.services_stop(this.srvId)
     this.load()
   }
 
   async onClickUninstallApp (e) {
     e?.preventDefault()
-    if (!confirm(`Uninstall ${this.appId}?`)) return
-    await session.api.apps.uninstall(this.appId)
+    if (!confirm(`Uninstall ${this.srvId}?`)) return
+    await session.api.services_uninstall(this.srvId)
     emit(this, 'navigate-to', {detail: {url: '/p/apps'}})
   }
 
   async onClickCheckUpdates () {
     this.updaterState = {status: 'processing', message: 'Checking for updates...'}
     try {
-      let status = await session.api.apps.checkForPackageUpdates(this.appId)
+      let status = await session.api.services_checkForPackageUpdates(this.srvId)
       if (status.hasUpdate) {
         this.updaterState = {status: 'update-available', message: `Update available: v${status.latestVersion} can now be installed!`}
       } else {
         this.updaterState = {status: 'no-update-available', message: `Your app is up-to-date!`}
       }
     } catch (e) {
-      this.updaterState = {status: 'error', message: e.toString()}
+      console.log(e)
+      this.updaterState = {status: 'error', message: e.message || e.toString()}
     }
   }
 
   async onClickInstallUpdate () {
     this.updaterState = {status: 'processing', message: 'Installing update...'}
     try {
-      let status = await session.api.apps.updatePackage(this.appId)
-      console.log(status)
-      if (this.app.isActive) {
+      let status = await session.api.services_updatePackage(this.srvId)
+      if (this.service.status === 'active') {
         this.updaterState = {status: 'processing', message: 'Restarting...'}
-        await session.api.apps.restart(this.appId)
+        await session.api.services_restart(this.srvId)
       }
       this.updaterState = {status: 'update-installed', message: `Update complete: v${status.installedVersion} is now installed!`}
       this.load()
     } catch (e) {
-      this.updaterState = {status: 'error', message: e.toString()}
+      this.updaterState = {status: 'error', message: e.message || e.toString()}
     }
   }
 
@@ -349,9 +350,9 @@ class AppAppView extends LitElement {
       const data = new FormData(this.querySelector('form#app-properties'))
       const updates = Object.fromEntries(data.entries())
       if (updates.port) updates.port = Number(updates.port)
-      await session.api.apps.updateConfig(this.appId, updates)
-      if (this.app.isActive) {
-        await session.api.apps.restart(this.appId)
+      await session.api.services_configure(this.srvId, updates)
+      if (this.service.status === 'active') {
+        await session.api.services_restart(this.srvId)
       }
       toast.create('Settings updated', 'success')
       this.load()

@@ -30,7 +30,7 @@ class AppAppSigninView extends LitElement {
     document.title = `Sign In`
     this.sessionId = (new URLSearchParams(location.search)).get('sessionId')
     this.session = await session.api.profiles.sessions.get(this.sessionId)
-    this.app = (await session.api.apps.get(this.session.appId))?.app
+    this.app = (await session.api.services_get(this.session.appId))?.app
     this.profiles = (await session.api.profiles.list())?.profiles
     console.log(this.session, this.profiles)
   }

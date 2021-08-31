@@ -147,11 +147,11 @@ class AppInstallAppView extends LitElement {
     try {
       let sourceUrl = this.sourceUrl
       if (sourceUrl.startsWith('/')) sourceUrl = `file://${sourceUrl}`
-      let res = await session.api.apps.install({sourceUrl, desiredVersion: this.desiredVersion})
+      let res = await session.api.services_install({sourceUrl, desiredVersion: this.desiredVersion})
       console.log(res)
       this.installerState = {status: 'installed', message: `Application installed! Redirecting...`}
       setTimeout(() => {
-        emit(this, 'navigate-to', {detail: {url: `/p/app/${res.id}`}})
+        emit(this, 'navigate-to', {detail: {url: `/p/app/${res.settings.id}`}})
       })
     } catch (e) {
       this.installerState = {status: 'error', message: e.toString()}

@@ -10,7 +10,7 @@ class AppSearchView extends LitElement {
     return {
       currentPath: {type: String, attribute: 'current-path'},
       currentSearch: {type: String},
-      apps: {type: Array}
+      services: {type: Array}
     }
   }
 

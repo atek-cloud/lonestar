@@ -10,7 +10,7 @@ class AppAppsView extends LitElement {
   static get properties () {
     return {
       currentPath: {type: String, attribute: 'current-path'},
-      apps: {type: Array},
+      services: {type: Array},
       updaterStates: {type: Object}
     }
   }
@@ -30,8 +30,8 @@ class AppAppsView extends LitElement {
       window.location = '/'
       return
     }
-    this.apps = (await session.api.apps.list())?.apps
-    console.log(this.apps)
+    this.services = (await session.api.services_list())?.services
+    console.log(this.services)
   }
 
   async refresh () {
@@ -59,29 +59,29 @@ class AppAppsView extends LitElement {
   }
 
   renderAppsList () {
-    if (!this.apps) {
+    if (!this.services) {
       return html`<div><span class="spinner"></span></div>`
     }
-    if (!this.apps.length) {
+    if (!this.services.length) {
       return html`<div>No apps installed</div>`
     }
     return html`
       <div>
-        ${repeat(this.apps, app => app.id, app => html`
+        ${repeat(this.services, srv => srv.settings.id, srv => html`
           <div class="mb-4">
             <h2 class="text-2xl">
-              <a class="hover:underline" href="http://${window.location.hostname}:${app.port}" target="_blank">${app.manifest?.name || app.id}</a>
+              <a class="hover:underline" href="http://${srv.settings.id}.${window.location.hostname}" target="_blank">${srv.settings.manifest?.name || srv.settings.id}</a>
             </h2>
             <div>
-              ${app.package.sourceType === 'git' ? app.package.installedVersion : 'Local folder'}
+              ${srv.settings.package.sourceType === 'git' ? srv.settings.package.installedVersion : 'Local folder'}
               |
-              <a href="/p/app/${app.id}" class="text-default-3 hover:underline">Details</a>
+              <a href="/p/app/${srv.settings.id}" class="text-default-3 hover:underline">Details</a>
               |
               <span class="inline-block">
-                <a class="cursor-pointer px-2 py-0.5 hover:bg-default-2" @click=${e => this.onClickAppMenu(e, app)}><span class="fas fa-ellipsis-h"></span></a>
+                <a class="cursor-pointer px-2 py-0.5 hover:bg-default-2" @click=${e => this.onClickAppMenu(e, srv)}><span class="fas fa-ellipsis-h"></span></a>
               </span>
             </div>
-            ${this.renderAppUpdater(app.id)}
+            ${this.renderAppUpdater(srv.settings.id)}
           </div>
         `)}
       </div>
@@ -113,17 +113,17 @@ class AppAppsView extends LitElement {
   // events
   // =
 
-  async onClickAppMenu (e, app) {
+  onClickAppMenu (e, srv) {
     e.preventDefault()
     e.stopPropagation()
     const el = e.currentTarget
     
     let items = []
-    if (app.package.sourceType === 'git') {
-      items.push({label: 'Check for updates', click: () => this.onClickCheckUpdates(undefined, app.id)})
+    if (srv.settings.package.sourceType === 'git') {
+      items.push({label: 'Check for updates', click: () => this.onClickCheckUpdates(undefined, srv.settings.id)})
     }
-    items.push({label: 'Details', click: () => emit(el, 'navigate-to', {detail: {url: `/p/app/${app.id}`}})})
-    items.push({label: 'Uninstall', click: () => this.onClickUninstallApp(undefined, app.id)})
+    items.push({label: 'Details', click: () => emit(el, 'navigate-to', {detail: {url: `/p/app/${srv.settings.id}`}})})
+    items.push({label: 'Uninstall', click: () => this.onClickUninstallApp(undefined, srv.settings.id)})
 
     contextMenu.create({
       parent: e.currentTarget.parentNode,
@@ -135,26 +135,26 @@ class AppAppsView extends LitElement {
 
   async onClickStartApp (e, id) {
     e?.preventDefault()
-    await session.api.apps.start(id)
+    await session.api.services_start(id)
     this.load()
   }
 
   async onClickRestartApp (e, id) {
     e?.preventDefault()
-    await session.api.apps.restart(id)
+    await session.api.services_restart(id)
     this.load()
   }
 
   async onClickStopApp (e, id) {
     e?.preventDefault()
-    await session.api.apps.stop(id)
+    await session.api.services_stop(id)
     this.load()
   }
 
   async onClickUninstallApp (e, id) {
     e?.preventDefault()
     if (!confirm(`Uninstall ${id}?`)) return
-    await session.api.apps.uninstall(id)
+    await session.api.services_uninstall(id)
     this.load()
   }
 
@@ -163,7 +163,7 @@ class AppAppsView extends LitElement {
     this.updaterStates = Object.assign(this.updaterStates, {[id]: {status: 'processing', message: 'Checking for updates...'}})
     this.requestUpdate()
     try {
-      let status = await session.api.apps.checkForPackageUpdates(id)
+      const status = await session.api.services_checkForPackageUpdates(id)
       if (status.hasUpdate) {
         this.updaterStates = Object.assign(this.updaterStates, {[id]: {status: 'update-available', message: `Update available: v${status.latestVersion} can now be installed!`}})
         this.requestUpdate()
@@ -182,12 +182,12 @@ class AppAppsView extends LitElement {
     this.updaterStates = Object.assign(this.updaterStates, {[id]: {status: 'processing', message: 'Installing update...'}})
     this.requestUpdate()
     try {
-      let status = await session.api.apps.updatePackage(id)
+      const status = await session.api.services_updatePackage(id)
       console.log(status)
-      if (this.apps.find(app => app.id === id)?.isActive) {
+      if (this.services.find(app => app.id === id)?.isActive) {
         this.updaterStates = Object.assign(this.updaterStates, {[id]: {status: 'processing', message: 'Restarting...'}})
         this.requestUpdate()
-        await session.api.apps.restart(id)
+        await session.api.services_restart(id)
       }
       this.updaterStates = Object.assign(this.updaterStates, {[id]: {status: 'update-installed', message: `Update complete: v${status.installedVersion} is now installed!`}})
       this.requestUpdate()

@@ -13,7 +13,7 @@ class AppMainView extends LitElement {
   static get properties () {
     return {
       currentPath: {type: String, attribute: 'current-path'},
-      apps: {type: Array}
+      services: {type: Array}
     }
   }
 
@@ -33,8 +33,8 @@ class AppMainView extends LitElement {
       }
       return this.requestUpdate()
     }
-    this.apps = (await session.api.apps.list())?.apps
-    console.log(this.apps)
+    this.services = (await session.api.services_list())?.services
+    console.log(this.services)
   }
 
   async refresh () {
@@ -43,8 +43,8 @@ class AppMainView extends LitElement {
   async pageLoadScrollTo (y) {
   }
 
-  get activeApps () {
-    return (this.apps || [])
+  get activeServices () {
+    return (this.services || [])
   }
 
   // rendering
@@ -99,38 +99,40 @@ class AppMainView extends LitElement {
       {path: '/album', thin: true, label: 'Album'},
       {path: '/calendar', thin: true, label: 'Calendar'}
     ]
-    const appColCount = Math.min((this.activeApps.length || 0) + 3, 5)
+    const srvColCount = Math.min((this.activeServices.length || 0) + 3, 5)
     return html`
       <main class="min-h-screen">
         <div class="flex items-center px-5 pt-4 text-lg bg-default">
           <div class="flex-1"></div>
           <div class="mx-3"><app-button transparent icon="fas fa-th" @click=${this.onClickAppsMenu}></app-button></div>
-          <img class="inline-block w-8 h-8 rounded-full" src="/img/tmp3.jpg" @click=${this.onClickLogout}>
+          <img class="inline-block w-8 h-8 rounded-full" src="/img/default-user-thumb.jpg" @click=${this.onClickLogout}>
         </div>
         <div style="margin-top: calc(25vh - 40px)">
-          <div class="text-center text-6xl text-default-2 mb-8">Selfcloud</div>
+          <div class="w-40 mx-auto text-center mb-8">
+            <img class="w-40" src="/img/logo-md.png">
+          </div>
           <div class="flex items-center bg-default border border-darker rounded-full py-2 px-1 max-w-2xl mx-auto mb-10">
             <span class="px-1.5">${icons.search(20, 20, 'block')}</span>
             <input class="flex-1" placeholder="Search" @keydown=${this.onKeydownSearch}>              
           </div>
-          <div class="grid gap-16 justify-center text-sm text-default-3" style="grid-template-columns: repeat(${appColCount}, auto)">
-            ${repeat(this.activeApps, app => app.id, (app, i) => html`
-              <a class="block text-center" href="http://localhost:${app.port}/">
-                <img class="mx-auto rounded object-fit" src="/img/fake${i+1}.png" style="width: 40px; height: 40px">
-                <span class="inline-block py-3">${app.manifest?.name || app.id}</span>
+          <div class="grid gap-8 justify-center text-sm text-default-3" style="grid-template-columns: repeat(${srvColCount}, auto)">
+            ${repeat(this.activeServices, srv => srv.id, (srv, i) => html`
+              <a class="block w-24 text-center" href="http://${srv.settings.id}.localhost/">
+                <img class="mx-auto rounded object-fit" src="/img/todo.png" style="width: 40px; height: 40px">
+                <span class="inline-block w-full truncate py-3">${srv.settings.manifest?.name || srv.settings.id}</span>
               </a>
             `)}
-            <a class="block text-center" href="/p/install-app">
-              <img class="mx-auto rounded object-fit" src="/img/install.png" style="width: 40px; height: 40px">
-              <span class="inline-block py-3">Install App</span>
+            <a class="block w-24 text-center" href="/p/install-app">
+              <img class="mx-auto rounded object-fit" src="/img/todo.png" style="width: 40px; height: 40px">
+              <span class="inline-block w-full truncate py-3">Install App</span>
             </a>
-            <a class="block text-center" href="/p/cloud">
-              <img class="mx-auto rounded object-fit" src="/img/cloud.png" style="width: 40px; height: 40px">
-              <span class="inline-block py-3">My Cloud</span>
+            <a class="block w-24 text-center" href="/p/cloud">
+              <img class="mx-auto rounded object-fit" src="/img/todo.png" style="width: 40px; height: 40px">
+              <span class="inline-block w-full truncate py-3">My Cloud</span>
             </a>
-            <a class="block text-center" href="/p/apps">
-              <img class="mx-auto rounded object-fit" src="/img/settings.png" style="width: 40px; height: 40px">
-              <span class="inline-block py-3">Settings</span>
+            <a class="block w-24 text-center" href="/p/apps">
+              <img class="mx-auto rounded object-fit" src="/img/todo.png" style="width: 40px; height: 40px">
+              <span class="inline-block w-full truncate py-3">Settings</span>
             </a>
           </div>
         </div>
