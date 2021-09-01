@@ -40,6 +40,14 @@ class AppAppsView extends LitElement {
   async pageLoadScrollTo (y) {
   }
 
+  get apps () {
+    return this.services ? this.services.filter(srv => !srv.settings.id.startsWith('core.')) : undefined
+  }
+  
+  get coreServices () {
+    return this.services ? this.services.filter(srv => srv.settings.id.startsWith('core.')) : undefined
+  }
+
   // rendering
   // =
 
@@ -48,40 +56,36 @@ class AppAppsView extends LitElement {
       <main class="min-h-screen bg-default-3">
         <app-header></app-header>
         <div class="max-w-4xl my-8 mx-auto bg-default rounded px-6 py-4">
-          <h1 class="text-5xl mb-6">Apps</h1>
           <div class="mb-6">
             <app-button label="Install New App" href="/p/install-app"></app-button>
           </div>
-          ${this.renderAppsList()}
+          <h1 class="text-2xl mb-6">Apps</h1>
+          ${this.renderServicesList(this.apps)}
+          <h1 class="text-2xl mt-6 mb-6">Core Services</h1>
+          ${this.renderServicesList(this.coreServices)}
         </div>
       </main>
     `
   }
 
-  renderAppsList () {
-    if (!this.services) {
+  renderServicesList (services) {
+    if (!services) {
       return html`<div><span class="spinner"></span></div>`
     }
-    if (!this.services.length) {
-      return html`<div>No apps installed</div>`
+    if (!services.length) {
+      return html`<div>None installed</div>`
     }
     return html`
-      <div>
-        ${repeat(this.services, srv => srv.settings.id, srv => html`
-          <div class="mb-4">
-            <h2 class="text-2xl">
-              <a class="hover:underline" href="http://${srv.settings.id}.${window.location.hostname}" target="_blank">${srv.settings.manifest?.name || srv.settings.id}</a>
-            </h2>
-            <div>
-              ${srv.settings.package.sourceType === 'git' ? srv.settings.package.installedVersion : 'Local folder'}
-              |
-              <a href="/p/app/${srv.settings.id}" class="text-default-3 hover:underline">Details</a>
-              |
-              <span class="inline-block">
-                <a class="cursor-pointer px-2 py-0.5 hover:bg-default-2" @click=${e => this.onClickAppMenu(e, srv)}><span class="fas fa-ellipsis-h"></span></a>
-              </span>
-            </div>
+      <div class="border border-default rounded">
+        ${repeat(services, srv => srv.settings.id, (srv, i) => html`
+          <div class="flex items-center px-2 py-1 ${i !== 0 ? 'border-t border-default' : ''}">
+            <img class="w-4 h-4 mr-2" src="/img/todo.png">
+            <a class="mr-auto hover:underline" href="/p/app/${srv.settings.id}">${srv.settings.manifest?.name || srv.settings.id}</a>
             ${this.renderAppUpdater(srv.settings.id)}
+            <span class="text-gray-600">${srv.settings.package.sourceType === 'git' ? srv.settings.package.installedVersion : 'Local folder'}</span>
+            <span class="inline-block">
+              <a class="cursor-pointer px-2 py-0.5 hover:bg-default-2" @click=${e => this.onClickAppMenu(e, srv)}><span class="fas fa-ellipsis-h"></span></a>
+            </span>
           </div>
         `)}
       </div>
@@ -94,7 +98,7 @@ class AppAppsView extends LitElement {
     if (this.updaterStates[id].status === 'error') cls = 'bg-error text-error font-medium'
     if (this.updaterStates[id].status === 'update-available' || this.updaterStates[id].status === 'update-installed') cls = 'bg-secondary text-inverse font-medium'
     return html`
-      <div class="mt-2 ml-6 px-4 py-3 rounded text-sm ${cls}">
+      <div class="rounded px-2 mr-2 text-sm ${cls}">
         ${this.updaterStates[id].status === 'processing' ? html`<span class="spinner"></span>` : ''}
         ${this.updaterStates[id].status === 'no-update-available' ? html`<span class="fas fa-check-circle"></span>` : ''}
         ${this.updaterStates[id].status === 'update-available' ? html`<span class="fas fa-download"></span>` : ''}

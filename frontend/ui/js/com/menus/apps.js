@@ -39,7 +39,7 @@ export class AppsMenu extends LitElement {
   }
 
   get activeServices () {
-    return (this.services || [])
+    return (this.services || []).filter(srv => srv.status === 'active' && !srv.settings.id.startsWith('core.'))
   }
 
   // rendering
