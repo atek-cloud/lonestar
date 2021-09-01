@@ -111,10 +111,16 @@ class AppInstallAppView extends LitElement {
             `}
           </form>
         </div>
+        <div class="max-w-4xl my-8 mx-auto bg-default rounded px-6 py-4">
+          <h1 class="text-2xl mb-4">Some apps to try:</h1>
+          <div class="text-lg">
+            <a class="text-link hover:underline cursor-pointer" data-href="https://github.com/atek-cloud/hello-world-node" @click=${this.onClickApp}>Hello World</a>
+            <small>(<a class="text-link hover:underline cursor-pointer" href="https://github.com/atek-cloud/hello-world-node" target="_blank">view source</a>)</small>
+          </div>
+        </div>
       </main>
     `
   }
-
 
   renderInstallerState () {
     if (!this.installerState) return ''
@@ -133,6 +139,10 @@ class AppInstallAppView extends LitElement {
 
   // events
   // =
+
+  onClickApp (e) {
+    this.querySelector('#sourceUrl-input').value = this.sourceUrl = e.currentTarget.dataset.href
+  }
 
   onChangeSourceUrl (e) {
     this.sourceUrl = e.currentTarget.value

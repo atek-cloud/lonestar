@@ -107,7 +107,7 @@ class AppMainView extends LitElement {
           <img class="inline-block w-8 h-8 rounded-full" src="/img/default-user-thumb.jpg" @click=${this.onClickLogout}>
         </div>
         <div style="margin-top: calc(25vh - 40px)">
-          <div class="w-40 mx-auto text-center mb-8">
+          <div class="w-40 mx-auto text-center mb-10">
             <img class="w-40" src="/img/logo-md.png">
           </div>
           <app-search-input class="block max-w-2xl mx-auto mb-10"></app-search-input>
