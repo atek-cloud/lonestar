@@ -1,13 +1,12 @@
 import { LitElement, html } from '../../vendor/lit/lit.min.js'
 import { repeat } from '../../vendor/lit/directives/repeat.js'
-import { emit } from '../lib/dom.js'
-import * as icons from '../com/icons.js'
 import * as session from '../lib/session.js'
 import * as appsMenu from '../com/menus/apps.js'
 import '../com/button.js'
 import '../com/login.js'
 import '../com/img-fallbacks.js'
 import '../com/subnav.js'
+import '../com/search-input.js'
 
 class AppMainView extends LitElement {
   static get properties () {
@@ -111,10 +110,7 @@ class AppMainView extends LitElement {
           <div class="w-40 mx-auto text-center mb-8">
             <img class="w-40" src="/img/logo-md.png">
           </div>
-          <div class="flex items-center bg-default border border-darker rounded-full py-2 px-1 max-w-2xl mx-auto mb-10">
-            <span class="px-1.5">${icons.search(20, 20, 'block')}</span>
-            <input class="flex-1" placeholder="Search" @keydown=${this.onKeydownSearch}>              
-          </div>
+          <app-search-input class="block max-w-2xl mx-auto mb-10"></app-search-input>
           <div class="grid gap-8 justify-center text-sm text-default-3" style="grid-template-columns: repeat(${srvColCount}, auto)">
             ${repeat(this.activeServices, srv => srv.id, (srv, i) => html`
               <a class="block w-24 text-center" href="http://${srv.settings.id}.localhost/">
@@ -143,13 +139,6 @@ class AppMainView extends LitElement {
 
   // events
   // =
-
-  onKeydownSearch (e) {
-    if (e.code === 'Enter') {
-      let q = e.currentTarget.value.trim()
-      emit(this, 'navigate-to', {detail: {url: `/p/search?q=${q}`}})
-    }
-  }
 
   onClickAppsMenu (e) {
     e.preventDefault()

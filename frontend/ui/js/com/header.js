@@ -3,6 +3,7 @@ import * as icons from './icons.js'
 import { emit } from '../lib/dom.js'
 import * as appsMenu from './menus/apps.js'
 import './button.js'
+import './search-input.js'
 
 export class Header extends LitElement {
   static get properties () {
@@ -25,10 +26,7 @@ export class Header extends LitElement {
           <img src="/img/logo-sm.png">
         </a>
         <div class="flex-1">
-          <div class="flex items-center border border-default rounded-full py-1.5 px-1.5 mr-2 max-w-2xl text-sm">
-            <span class="px-1.5">${icons.search(20, 20, 'block')}</span>
-            <input class="flex-1" placeholder="Search" value=${(new URLSearchParams(location.search)).get('q') || ''} @keydown=${this.onKeydownSearch}>              
-          </div>
+          <app-search-input in-header class="block max-w-2xl"></app-search-input>
         </div>
         <div class="mx-3"><app-button transparent icon="fas fa-th" @click=${this.onClickAppsMenu}></app-button></div>
         <img class="inline-block w-8 h-8 rounded-full" src="/img/default-user-thumb.jpg" @click=${this.onClickLogout}>

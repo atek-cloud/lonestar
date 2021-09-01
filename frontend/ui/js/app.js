@@ -103,6 +103,11 @@ class AppRoot extends LitElement {
     }
     this.pageHasChanges = false
 
+    if (pathname.startsWith('http:') || pathname.startsWith('https:')) {
+      window.location = pathname
+      return
+    }
+
     contextMenu.destroy()
     BasePopup.destroy()
     
