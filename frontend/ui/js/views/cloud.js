@@ -10,8 +10,7 @@ class AppCloudView extends LitElement {
   static get properties () {
     return {
       currentPath: {type: String, attribute: 'current-path'},
-      bucketId: {type: String},
-      bucket: {type: Array}
+      dbs: {type: Array}
     }
   }
 
@@ -31,13 +30,18 @@ class AppCloudView extends LitElement {
       return
     }
 
-    let pathParts = this.currentPath.split('/').filter(Boolean)
+    const cfg = await session.api.adbctrl_getConfig()
+    this.dbs = [
+      {dbId: cfg.serverDbId, displayName: 'System DB'}
+    ].concat(await session.api.adbctrl_listDbs())
+    console.log(this.dbs)
+    /*let pathParts = this.currentPath.split('/').filter(Boolean)
     if (this.currentPath.startsWith('/p/cloud/bucket')) {
       this.bucketId = this.currentPath.split('/').filter(Boolean).pop()
     } else {
       this.bucketId = 'root'
     }
-    this.bucket = (await (await fetch(`/_api/cloud/bucket/${this.bucketId}`)).json())
+    this.bucket = (await (await fetch(`/_api/cloud/bucket/${this.bucketId}`)).json())*/
   }
 
   // updated (changedProperties) {
@@ -62,21 +66,21 @@ class AppCloudView extends LitElement {
         <div class="px-4 py-4">
           <h2 class="border-b border-default font-medium mb-3 pb-1 text-lg">
             <a href="/p/cloud" class="hover:underline">My Cloud</a>
-            ${this.bucketId !== 'root' ? html`
+            ${''/*this.bucketId !== 'root' ? html`
               › <a class="hover:underline" href="/p/cloud/bucket/${this.bucketId}">${this.bucket?.title || this.bucketId}</a>
-            ` : ''}
+            ` : ''*/}
           </h2>
-          ${!this.bucket ? html`
+          ${!this.dbs ? html`
             <div><span class="spinner"></span></div>
-          ` : !this.bucket.items.length ? html`
-            <div>${this.bucket?.title || this.bucketId} is empty.</div>
+          ` : !this.dbs.length ? html`
+            <div>This server is empty.</div>
           ` : html`
             <div class="grid gap-2" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))">
-              ${repeat(this.bucket.items, item => html`
-                <a class="block border border-default rounded bg-default text-center pt-8 pb-8" href="${item.bucketId ? `/p/cloud/bucket/${item.bucketId}` : `/p/cloud/view/${item.dbId}`}">
-                  ${this.renderItemIcon(item)}
-                  <div class="text-lg leading-none mb-1">${item.title}</div>
-                  <div class="text-sm text-default-2 leading-none">${item.label}</div>
+              ${repeat(this.dbs, db => html`
+                <a class="block border border-default rounded bg-default text-center pt-8 pb-8" href=${`/p/cloud/view/${db.dbId}`}>
+                  ${this.renderItemIcon(db)}
+                  <div class="text-lg leading-none mb-1">${db.displayName}</div>
+                  <div class="text-sm text-default-2 leading-none">Atek DB</div>
                 </a>
               `)}
             </div>
@@ -87,7 +91,7 @@ class AppCloudView extends LitElement {
   }
 
   renderItemIcon (item) {
-    if (item.type === 'profile') {
+    /*if (item.type === 'profile') {
       return html`
         <div class="mb-4 relative">
           <img class="block mx-auto mb-4" src="/img/user.png" style="width: 40px; height: 40px">
@@ -103,7 +107,7 @@ class AppCloudView extends LitElement {
     }
     if (item.type === 'app-bucket') {
       return html`<img class="block mx-auto mb-4" src="/img/todo.png" style="width: 40px; height: 40px">`
-    }
+    }*/
     return html`
       <img class="block mx-auto mb-4" src="/img/todo.png" style="width: 40px; height: 40px">
     `
