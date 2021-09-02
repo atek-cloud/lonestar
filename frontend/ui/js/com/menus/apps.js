@@ -66,10 +66,13 @@ export class AppsMenu extends LitElement {
         }
         .container a img {
           display: block;
-          width: 40px;
-          height: 40px;
+          width: 52px;
+          height: 52px;
           object-fit: cover;
           margin: 0 auto 10px;
+          border-radius: 50%;
+          border: 1px solid #fff;
+          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
         }
         .container a span {
           display: block;
@@ -86,15 +89,15 @@ export class AppsMenu extends LitElement {
             </a>
           `)}
           <a class="block text-center" href="/p/install-app">
-            <img src="/img/todo.png">
+            <img src="/img/icons/install.png">
             <span>Install App</span>
           </a>
           <a class="block text-center" href="/p/cloud">
-            <img src="/img/todo.png">
+            <img src="/img/icons/cloud.png">
             <span>My Cloud</span>
           </a>
           <a class="block text-center" href="/p/apps">
-            <img src="/img/todo.png">
+            <img src="/img/icons/settings.png">
             <span>Settings</span>
           </a>
         ` : ''}

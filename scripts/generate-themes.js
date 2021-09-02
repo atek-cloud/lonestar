@@ -41,7 +41,7 @@ body.theme-vanilla-light {
   --color-border-default-2: ${colors.coolGray[200]};
   --color-border-default-3: ${colors.coolGray[100]};
   --color-border-default-4: ${colors.coolGray[50]};
-  --color-border-darker: ${colors.coolGray[400]};
+  --color-border-darker: #c4cbd6;
   --color-border-darker-2: ${colors.coolGray[500]};
   --color-border-darker-3: ${colors.coolGray[600]};
   --color-border-inverse: ${colors.white};

@@ -7,17 +7,17 @@ import * as icons from '../com/icons.js'
 const LINKS = [
   {
     href: '/p/install-app',
-    img: '/img/todo.png',
+    img: '/img/icons/install.png',
     title: 'Install App'
   },
   {
     href: '/p/cloud',
-    img: '/img/todo.png',
+    img: '/img/icons/cloud.png',
     title: 'My Cloud'
   },
   {
     href: '/p/apps',
-    img: '/img/todo.png',
+    img: '/img/icons/settings.png',
     title: 'Settings'
   }
 ]
@@ -131,7 +131,7 @@ export class SearchInput extends LitElement {
     }
     const showResults = this.isFocused && this.query
     return html`
-      <div class="relative bg-default">
+      <div class="relative">
         <div class="
           flex items-center border bg-default
           ${this.isInHeader ? 'border-default py-1.5 px-1.5 text-sm' : 'border-darker py-2 px-1'}
