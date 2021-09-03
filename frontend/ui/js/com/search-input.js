@@ -7,17 +7,17 @@ import * as icons from '../com/icons.js'
 const LINKS = [
   {
     href: '/p/install-app',
-    img: '/img/icons/install.png',
+    img: '/img/icons/install@2x.png',
     title: 'Install App'
   },
   {
     href: '/p/cloud',
-    img: '/img/icons/cloud.png',
-    title: 'My Cloud'
+    img: '/img/icons/cloud@2x.png',
+    title: 'My Data'
   },
   {
     href: '/p/apps',
-    img: '/img/icons/settings.png',
+    img: '/img/icons/settings@2x.png',
     title: 'Settings'
   }
 ]

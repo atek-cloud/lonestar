@@ -100,7 +100,7 @@ class AppMainView extends LitElement {
     ]
     const srvColCount = Math.min((this.activeServices.length || 0) + 3, 5)
     return html`
-      <main class="min-h-screen" style="background: url(/img/home-bg.png); background-size: cover;">
+      <main class="min-h-screen">
         <div class="flex items-center px-5 pt-4 text-lg">
           <div class="flex-1"></div>
           <div class="mx-3">
@@ -109,7 +109,7 @@ class AppMainView extends LitElement {
           <img class="inline-block w-8 h-8 rounded-full" src="/img/default-user-thumb.jpg" @click=${this.onClickLogout}>
         </div>
         <div style="margin-top: calc(20vh - 40px)">
-          <img class="block mx-auto mb-12" src="/img/logo-md.png">
+          <img class="block mx-auto mb-12" src="/img/logo-md@2x.png" style="width: 100px">
           <app-search-input class="block max-w-xl mx-auto mb-12"></app-search-input>
           <div class="grid gap-8 justify-center max-w-2xl mx-auto text-sm" style="grid-template-columns: repeat(${srvColCount}, auto)">
             ${repeat(this.activeServices, srv => srv.id, (srv, i) => html`
@@ -119,15 +119,15 @@ class AppMainView extends LitElement {
               </a>
             `)}
             <a class="block w-24 text-center" href="/p/install-app">
-              <img class="border border-white mx-auto object-fit rounded-full shadow" src="/img/icons/install.png" style="width: 52px; height: 52px">
+              <img class="mx-auto" src="/img/icons/install@2x.png" style="width: 50px; height: 50px">
               <span class="inline-block w-full truncate pt-3">Install App</span>
             </a>
             <a class="block w-24 text-center" href="/p/cloud">
-              <img class="border border-white mx-auto object-fit rounded-full shadow" src="/img/icons/cloud.png" style="width: 52px; height: 52px">
+              <img class="mx-auto" src="/img/icons/cloud@2x.png" style="width: 50px; height: 50px">
               <span class="inline-block w-full truncate pt-3">My Data</span>
             </a>
             <a class="block w-24 text-center" href="/p/apps">
-              <img class="border border-white mx-auto object-fit rounded-full shadow" src="/img/icons/settings.png" style="width: 52px; height: 52px">
+              <img class="mx-auto" src="/img/icons/settings@2x.png" style="width: 50px; height: 50px">
               <span class="inline-block w-full truncate pt-3">Settings</span>
             </a>
           </div>
