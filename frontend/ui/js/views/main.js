@@ -101,33 +101,33 @@ class AppMainView extends LitElement {
     const srvColCount = Math.min((this.activeServices.length || 0) + 3, 5)
     return html`
       <main class="min-h-screen">
-        <div class="flex items-center px-5 pt-4 text-lg">
-          <div class="flex-1"></div>
-          <div class="mx-3">
-            <button class="rounded hover:bg-gray-200 px-2 py-1" @click=${this.onClickAppsMenu}><span class="fas fa-th"></span></button>
-          </div>
-          <img class="inline-block w-8 h-8 rounded-full" src="/img/default-user-thumb.jpg" @click=${this.onClickLogout}>
-        </div>
+        <app-header></app-header>
         <div style="margin-top: calc(20vh - 40px)">
-          <img class="block mx-auto mb-12" src="/img/logo-md@2x.png" style="width: 100px">
-          <app-search-input class="block max-w-xl mx-auto mb-12"></app-search-input>
-          <div class="grid gap-8 justify-center max-w-2xl mx-auto text-sm" style="grid-template-columns: repeat(${srvColCount}, auto)">
+          <div class="grid gap-12 justify-center max-w-2xl mx-auto text-sm" style="grid-template-columns: repeat(${srvColCount}, auto)">
             ${repeat(this.activeServices, srv => srv.id, (srv, i) => html`
               <a class="block w-24 text-center" href="http://${srv.settings.id}.localhost/">
-                <img class="border border-white mx-auto object-fit rounded-full shadow" src="/img/todo.png" style="width: 40px; height: 40px">
+                <div class="mx-auto bg-gray-100 rounded-full" style="width: 70px; height: 70px; padding: 15px">
+                  <img src="/img/todo.png" style="width: 40px; height: 40px">
+                </div>
                 <span class="inline-block w-full truncate pt-3">${srv.settings.manifest?.name || srv.settings.id}</span>
               </a>
             `)}
             <a class="block w-24 text-center" href="/p/install-app">
-              <img class="mx-auto" src="/img/icons/install@2x.png" style="width: 50px; height: 50px">
+              <div class="mx-auto bg-gray-100 rounded-full" style="width: 70px; height: 70px; padding: 15px">
+                <img src="/img/icons/install.png" srcset="/img/icons/install.png 1x, /img/icons/install@2x.png 2x" style="width: 40px; height: 40px">
+              </div>
               <span class="inline-block w-full truncate pt-3">Install App</span>
             </a>
             <a class="block w-24 text-center" href="/p/cloud">
-              <img class="mx-auto" src="/img/icons/cloud@2x.png" style="width: 50px; height: 50px">
+              <div class="mx-auto bg-gray-100 rounded-full" style="width: 70px; height: 70px; padding: 15px">
+                <img src="/img/icons/cloud.png" srcset="/img/icons/cloud.png 1x, /img/icons/cloud@2x.png 2x" style="width: 40px; height: 40px">
+              </div>
               <span class="inline-block w-full truncate pt-3">My Data</span>
             </a>
             <a class="block w-24 text-center" href="/p/apps">
-              <img class="mx-auto" src="/img/icons/settings@2x.png" style="width: 50px; height: 50px">
+              <div class="mx-auto bg-gray-100 rounded-full" style="width: 70px; height: 70px; padding: 15px">
+                <img src="/img/icons/settings.png" srcset="/img/icons/settings.png 1x, /img/icons/settings@2x.png 2x" style="width: 40px; height: 40px">
+              </div>
               <span class="inline-block w-full truncate pt-3">Settings</span>
             </a>
           </div>

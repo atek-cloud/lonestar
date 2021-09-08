@@ -7,6 +7,7 @@ export class Button extends LitElement {
     return {
       label: {type: String},
       icon: {type: String},
+      iconSize: {type: Number, attribute: 'icon-size'},
       href: {type: String},
       newWindow: {type: Boolean, attribute: 'new-window'},
       btnClass: {type: String, attribute: 'btn-class'},
@@ -72,7 +73,8 @@ export class Button extends LitElement {
 
   renderIcon () {
     if (!this.icon) return ''
-    if (this.icon in icons) return html`<span class="relative" style="top: -2px">${icons[this.icon](16, 16)}</span>`
+    const sz = this.iconSize || 16
+    if (this.icon in icons) return html`<span class="relative" style="top: -2px">${icons[this.icon](sz, sz)}</span>`
     return html`<span class=${this.icon}></span> `
   }
 

@@ -116,7 +116,21 @@ export const downArrow = (width = 12, height = 12, cls = 'inline-block', strokeW
 
 export const power = (width = 12, height = 12, cls = 'inline-block') => svg`
   <svg class=${cls} width=${width} height=${height} viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <path d="M 75.706 24.423 C 83.201 31.347 87.895 41.258 87.895 52.266 C 87.895 73.195 70.929 90.161 50 90.161 C 29.071 90.161 12.105 73.195 12.105 52.266 C 12.105 41.216 16.835 31.271 24.38 24.344" style="stroke: rgb(0, 0, 0); fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 6px;"/>
-  <line style="stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-width: 6px;" x1="50" y1="11.31" x2="50" y2="53.67"/>
-</svg>
+    <path d="M 75.706 24.423 C 83.201 31.347 87.895 41.258 87.895 52.266 C 87.895 73.195 70.929 90.161 50 90.161 C 29.071 90.161 12.105 73.195 12.105 52.266 C 12.105 41.216 16.835 31.271 24.38 24.344" style="stroke: rgb(0, 0, 0); fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 6px;"/>
+    <line style="stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-width: 6px;" x1="50" y1="11.31" x2="50" y2="53.67"/>
+  </svg>
+`
+
+export const dots = (width =12, height = 12, cls = 'inline-block') => svg`
+  <svg class=${cls} width=${width} height=${height} viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+    <rect x="212" y="212" width="76" height="76" style=""/>
+    <rect x="212" y="82" width="76" height="76" style=""/>
+    <rect x="212" y="342" width="76" height="76" style=""/>
+    <rect x="342" y="212" width="76" height="76" style=""/>
+    <rect x="342" y="82" width="76" height="76" style=""/>
+    <rect x="342" y="342" width="76" height="76" style=""/>
+    <rect x="82" y="82" width="76" height="76" style=""/>
+    <rect x="82" y="212" width="76" height="76" style=""/>
+    <rect x="82" y="342" width="76" height="76" style=""/>
+  </svg>
 `

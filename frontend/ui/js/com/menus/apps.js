@@ -66,14 +66,15 @@ export class AppsMenu extends LitElement {
         }
         .container a img {
           display: block;
-          width: 50px;
-          height: 50px;
+          width: 40px;
+          height: 40px;
           object-fit: cover;
           margin: 0 auto 10px;
         }
         .container a span {
           display: block;
           color: #444;
+          font-weight: 500;
           line-height: 1;
         }
       </style>

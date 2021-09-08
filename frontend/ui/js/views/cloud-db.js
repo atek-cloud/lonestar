@@ -58,7 +58,7 @@ class AppCloudDbView extends LitElement {
     this.hyperKey = pathParts[3]
 
     if (!this.dbDesc) {
-      this.dbDesc = await session.api.adb_describe(this.hyperKey)
+      this.dbDesc = await session.api.adb_dbDescribe(this.hyperKey)
       console.log(this.dbDesc)
     }
 
@@ -70,14 +70,14 @@ class AppCloudDbView extends LitElement {
     try {
       if (tableId) {
         if (recordKey) {
-          this.record = await session.api.adb_get(this.hyperKey, tableId, recordKey)
+          this.record = await session.api.adb_tblGet(this.hyperKey, tableId, recordKey)
           if (this.getSchema(this.record.path)) {
             this.currentView = 'form'
           } else {
             this.currentView = 'data'
           }
         } else {
-          this.records = (await session.api.adb_list(this.hyperKey, tableId)).records
+          this.records = (await session.api.adb_tblList(this.hyperKey, tableId)).records
         }
       } else {
         this.tables = this.dbDesc?.tables
