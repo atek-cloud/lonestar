@@ -45,5 +45,5 @@ app.post('/_api', (req, res) => {
 app.use('/json-forms', express.static(join(__dirname, 'frontend/json-forms')));
 app.use(express.static(join(__dirname, 'frontend/ui')));
 app.use((req, res) => res.sendFile(join(__dirname, 'frontend/ui/index.html')));
-const PORT = Number(process.env.ATEK_ASSIGNED_PORT);
-app.listen(PORT, () => console.log('Lonestar listening on', PORT));
+const SOCKETFILE = process.env.ATEK_ASSIGNED_SOCKET_FILE;
+app.listen(SOCKETFILE, () => console.log('Lonestar listening on', SOCKETFILE));
