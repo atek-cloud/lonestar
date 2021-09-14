@@ -7,20 +7,8 @@ import services from '@atek-cloud/services-api'
 
 const __dirname = join(dirname(fileURLToPath(import.meta.url)), '..')
 
-// TODO come up with a permanent rpc api solution which handles auth and etc -prf
 const apiServer = createRpcServer({
-  whoami () {
-    // TODO
-  },
 
-  login () {
-    // TODO
-  },
-
-  logout () {
-    // TODO
-  },
-  
   services_list: () => services.list(),
   services_get: (id) => services.get(id),
   services_start: (id) => services.start(id),

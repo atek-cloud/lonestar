@@ -26,10 +26,6 @@ class AppAppsView extends LitElement {
 
   async load () {
     document.title = `Home`
-    if (!session.isActive()) {
-      window.location = '/'
-      return
-    }
     this.services = (await session.api.services_list())?.services
     console.log(this.services)
   }

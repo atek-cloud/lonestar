@@ -40,10 +40,6 @@ class AppAppView extends LitElement {
 
   async load () {
     document.title = `Home`
-    if (!session.isActive()) {
-      window.location = '/'
-      return
-    }
 
     const pathParts = window.location.pathname.split('/').filter(Boolean)
     let oldView = this.currentView

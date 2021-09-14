@@ -44,10 +44,6 @@ class AppCloudDbView extends LitElement {
 
   async load () {
     document.title = `Server Settings`
-    if (!session.isActive()) {
-      window.location = '/'
-      return
-    }
 
     this.record = undefined
     this.records = undefined

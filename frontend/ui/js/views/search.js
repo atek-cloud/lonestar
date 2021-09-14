@@ -24,10 +24,6 @@ class AppSearchView extends LitElement {
 
   async load () {
     document.title = `Search`
-    if (!session.isActive()) {
-      window.location = '/'
-      return
-    }
     this.currentSearch = (new URLSearchParams(location.search)).get('q')
   }
 

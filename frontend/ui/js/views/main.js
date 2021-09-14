@@ -3,7 +3,6 @@ import { repeat } from '../../vendor/lit/directives/repeat.js'
 import * as session from '../lib/session.js'
 import * as appsMenu from '../com/menus/apps.js'
 import '../com/button.js'
-import '../com/login.js'
 import '../com/img-fallbacks.js'
 import '../com/subnav.js'
 import '../com/search-input.js'
@@ -26,12 +25,6 @@ class AppMainView extends LitElement {
 
   async load () {
     document.title = `Home`
-    if (!session.isActive()) {
-      if (location.pathname !== '/') {
-        window.location = '/'
-      }
-      return this.requestUpdate()
-    }
     this.services = (await session.api.services_list())?.services
     console.log(this.services)
   }
@@ -56,42 +49,6 @@ class AppMainView extends LitElement {
   }
 
   renderCurrentView () {
-    if (!session.isActive()) {
-      return this.renderNoSession()
-    }
-    return this.renderWithSession()
-  }
-
-  renderNoSession () {
-    return html`
-      <div class="flex items-center justify-center w-screen h-screen bg-blue-600">
-        <style>
-          .animated-ring {
-            animation: animated-ring-anim 3s infinite;
-          }
-          @keyframes animated-ring-anim {
-            0% {
-              transform: scale(1);
-              opacity: 1;
-            }
-            100% {
-              transform: scale(1.25);
-              opacity: 0;
-            }
-          }
-        </style>
-        <div class="w-96">
-          <div class="w-48 h-48 relative mx-auto mb-10">
-            <div class="animated-ring absolute rounded-full w-48 h-48 border border-white"></div>
-            <div class="flex items-center justify-center rounded-full w-48 h-48 border-8 border-white text-white text-4xl">PF</div>
-          </div>
-          <app-login></app-login>
-        </div>
-      </div>
-    `
-  }
-
-  renderWithSession () {
     const SUBNAV_ITEMS = [
       // {menu: true, mobileOnly: true, label: html`<span class="fas fa-bars"></span>`},
       {path: '/', thin: true, label: 'Updates'},

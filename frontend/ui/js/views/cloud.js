@@ -25,10 +25,6 @@ class AppCloudView extends LitElement {
 
   async load () {
     document.title = `My Cloud`
-    if (!session.isActive()) {
-      window.location = '/'
-      return
-    }
 
     const cfg = await session.api.adb_getConfig()
     this.dbs = [
