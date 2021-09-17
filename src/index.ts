@@ -20,8 +20,10 @@ const apiServer = createRpcServer({
   services_updatePackage: (id) => services.updatePackage(id),
   services_configure: (id, updates) => services.configure(id, updates),
 
-  adb_getConfig: () => adb.api.getConfig(),
-  adb_dbList: () => adb.api.dbList(),
+  async adb_adminListDbsByOwningUser (userKey?: string) {
+    const res = await adb.api.adminListDbsByOwningUser(userKey || this.req.headers['atek-auth-user'])
+    return res
+  },
 
   adb_dbDescribe: (dbId) => adb.api.dbDescribe(dbId),
   adb_tblDefine: (dbId, tableId, desc) => adb.api.tblDefine(dbId, tableId, desc),

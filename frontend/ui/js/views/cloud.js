@@ -26,10 +26,10 @@ class AppCloudView extends LitElement {
   async load () {
     document.title = `My Cloud`
 
-    const cfg = await session.api.adb_getConfig()
     this.dbs = [
-      {dbId: cfg.serverDbId, displayName: 'System DB'}
-    ].concat(await session.api.adb_dbList())
+      ...(await session.api.adb_adminListDbsByOwningUser('system').catch(e => ([]))),
+      ...(await session.api.adb_adminListDbsByOwningUser().catch(e => ([])))
+    ]
     console.log(this.dbs)
     /*let pathParts = this.currentPath.split('/').filter(Boolean)
     if (this.currentPath.startsWith('/p/cloud/bucket')) {
