@@ -144,7 +144,7 @@ class AppCloudDbView extends LitElement {
   render () {
     return html`
       <main class="min-h-screen bg-default-3">
-        <app-header></app-header>
+        <lonestar-header></lonestar-header>
         <div class="px-4 py-4">
           <h1 class="text-lg mb-2 font-medium">
             <a class="text-primary hover:underline" href="/p/cloud">My Cloud</a>
@@ -232,7 +232,7 @@ class AppCloudDbView extends LitElement {
                 ${getTableDescription(table) ? html`<div class="text-sm">${getTableDescription(table)}</div>` : ''}
               </div>
               <div>
-                <app-button transparent label="New record" icon="fas fa-plus" @click=${this.onClickNew}></app-button>
+                <lonestar-button transparent label="New record" icon="fas fa-plus" @click=${this.onClickNew}></lonestar-button>
               </div>
             </div>
           ` : ''}
@@ -255,8 +255,8 @@ class AppCloudDbView extends LitElement {
         <div style="flex: 0 0 33vw">
           <div class="bg-default border border-default rounded mb-1">
             <div class="px-2 py-2">
-              <app-button ?primary=${this.hasChanges} label="Save changes" icon="fas fa-save" ?disabled=${!this.hasChanges} @click=${this.onClickSave}></app-button>
-              <app-button transparent btn-class="hover:text-error" label="Delete" icon="far fa-trash-alt" @click=${this.onClickDelete}></app-button>
+              <lonestar-button ?primary=${this.hasChanges} label="Save changes" icon="fas fa-save" ?disabled=${!this.hasChanges} @click=${this.onClickSave}></lonestar-button>
+              <lonestar-button transparent btn-class="hover:text-error" label="Delete" icon="far fa-trash-alt" @click=${this.onClickDelete}></lonestar-button>
             </div>
             ${desc ? html`
               <div class="flex items-center border-t border-default">
@@ -335,7 +335,7 @@ class AppCloudDbView extends LitElement {
   }
 }
 
-customElements.define('app-cloud-db-view', AppCloudDbView)
+customElements.define('lonestar-cloud-db-view', AppCloudDbView)
 
 function getTableTitle (table) {
   return table?.templates?.table?.title || table.tableId.split('/')[1]

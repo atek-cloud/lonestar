@@ -1,5 +1,6 @@
 import { LitElement, html } from '../../vendor/lit/lit.min.js'
 import * as session from '../lib/session.js'
+import { getServiceUrl } from '../lib/services.js'
 import * as toast from '../com/toast.js'
 import { emit } from '../lib/dom.js'
 import * as contextMenu from '../com/context-menu.js'
@@ -8,7 +9,7 @@ import '../com/header.js'
 
 const TIMESTAMP_RE = /( (\d)+\/(\d)+\/(\d)+, (\d)+:(\d)+:(\d)+ (AM|PM))/g
 
-class AppAppView extends LitElement {
+class AppAppSettingsView extends LitElement {
   static get properties () {
     return {
       srvId: {type: String},
@@ -102,17 +103,17 @@ class AppAppView extends LitElement {
   render () {
     return html`
       <main class="min-h-screen bg-default-3">
-        <app-header></app-header>
+        <lonestar-header></lonestar-header>
         <div class="max-w-4xl my-8 mx-auto bg-default rounded px-6 py-4">
           <div>
-            <a class="hover:underline" href="/p/apps"><span class="fas fa-angle-left"></span> Apps</a>
+            <a class="hover:underline" href="/p/settings"><span class="fas fa-angle-left"></span> Apps</a>
           </div>
           <h1 class="text-5xl mb-4">${this.srvName}</h1>
           ${this.renderSrvHeader()}
           <div class="flex border border-default">
             <div class="border-r border-default">
-              <a class="block px-4 py-2 ${this.currentView === 'properties' ? 'bg-default-2' : ''} hover:underline" href="/p/app/${this.srvId}">Properties</a>
-              <a class="block px-4 py-2 ${this.currentView === 'log' ? 'bg-default-2' : ''} hover:underline" href="/p/app/${this.srvId}/log">Logs</a>
+              <a class="block px-4 py-2 ${this.currentView === 'properties' ? 'bg-default-2' : ''} hover:underline" href="/p/app-settings/${this.srvId}">Properties</a>
+              <a class="block px-4 py-2 ${this.currentView === 'log' ? 'bg-default-2' : ''} hover:underline" href="/p/app-settings/${this.srvId}/log">Logs</a>
             </div>
             <div class="flex-1">
               ${this.renderAppCurrentView()}
@@ -136,9 +137,9 @@ class AppAppView extends LitElement {
         `}
       </div>
       <div class="mb-6">
-        <app-button label="Open" href="http://${this.service.settings.id}.${window.location.hostname}" new-window></app-button>
-        ${this.service.settings.package.sourceType === 'git' ? html`<app-button transparent label="Check for updates" @click=${this.onClickCheckUpdates}></app-button>`: ''}
-        <app-button transparent label="Uninstall" @click=${this.onClickUninstallApp}></app-button>
+        <lonestar-button primary label="Open" href=${getServiceUrl(this.service)} new-window></lonestar-button>
+        ${this.service.settings.package.sourceType === 'git' ? html`<lonestar-button transparent label="Check for updates" @click=${this.onClickCheckUpdates}></lonestar-button>`: ''}
+        <lonestar-button transparent label="Uninstall" @click=${this.onClickUninstallApp}></lonestar-button>
         <span class="inline-block">
           <a class="cursor-pointer px-2 py-0.5 hover:bg-default-2" @click=${this.onClickAppMenu}><span class="fas fa-ellipsis-h"></span></a>
         </span>
@@ -162,7 +163,7 @@ class AppAppView extends LitElement {
         ${this.updaterState.message}
         ${this.updaterState.status === 'update-available' ? html`
           <span class="ml-2">
-            <app-button label="Install Now" btn-class="bg-secondary text-inverse hover:bg-secondary-2 border border-inverse" @click=${this.onClickInstallUpdate}></app-button>
+            <lonestar-button label="Install Now" btn-class="bg-secondary text-inverse hover:bg-secondary-2 border border-inverse" @click=${this.onClickInstallUpdate}></lonestar-button>
           </span>
         ` : ''}
       </div>
@@ -198,7 +199,7 @@ class AppAppView extends LitElement {
         </p>
       </div>
       <div class="px-5 py-3 text-default-3">
-        <form id="app-properties">
+        <form id="lonestar-properties">
           <label class="block font-semibold p-1" for="sourceUrl-input">Source</label>
           <input
             autofocus
@@ -238,7 +239,7 @@ class AppAppView extends LitElement {
             </div>
           ` : ''}
           <div class="text-right">
-            <app-button primary label="Save${this.service.settings === 'active' ? ' and restart' : ''}" btn-class="px-4 py-2" @click=${this.onClickSaveProperties}></app-button>
+            <lonestar-button label="Save${this.service.settings === 'active' ? ' and restart' : ''}" btn-class="px-4 py-2" @click=${this.onClickSaveProperties}></lonestar-button>
           </div>
         </form>
       </div>
@@ -301,7 +302,7 @@ class AppAppView extends LitElement {
     e?.preventDefault()
     if (!confirm(`Uninstall ${this.srvId}?`)) return
     await session.api.services_uninstall(this.srvId)
-    emit(this, 'navigate-to', {detail: {url: '/p/apps'}})
+    emit(this, 'navigate-to', {detail: {url: '/p/settings'}})
   }
 
   async onClickCheckUpdates () {
@@ -343,7 +344,7 @@ class AppAppView extends LitElement {
     e.preventDefault()
     this.error = undefined
     try {
-      const data = new FormData(this.querySelector('form#app-properties'))
+      const data = new FormData(this.querySelector('form#lonestar-properties'))
       const updates = Object.fromEntries(data.entries())
       if (updates.port) updates.port = Number(updates.port)
       await session.api.services_configure(this.srvId, updates)
@@ -358,4 +359,4 @@ class AppAppView extends LitElement {
   }
 }
 
-customElements.define('app-app-view', AppAppView)
+customElements.define('lonestar-app-settings-view', AppAppSettingsView)

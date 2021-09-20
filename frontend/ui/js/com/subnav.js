@@ -142,4 +142,4 @@ export class Subnav extends LitElement {
   }
 }
 
-customElements.define('app-subnav', Subnav)
+customElements.define('lonestar-subnav', Subnav)

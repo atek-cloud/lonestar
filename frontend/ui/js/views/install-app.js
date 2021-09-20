@@ -63,10 +63,10 @@ class AppInstallAppView extends LitElement {
   render () {
     return html`
       <main class="min-h-screen bg-default-3">
-        <app-header></app-header>
+        <lonestar-header></lonestar-header>
         <div class="max-w-4xl my-8 mx-auto bg-default rounded px-6 py-4">
           <div>
-            <a class="hover:underline" href="/p/apps"><span class="fas fa-angle-left"></span> Apps</a>
+            <a class="hover:underline" href="/p/settings"><span class="fas fa-angle-left"></span> Apps</a>
           </div>
           <h1 class="text-5xl mb-4">Install New App</h1>
           <form id="app-properties">
@@ -106,7 +106,7 @@ class AppInstallAppView extends LitElement {
             ${this.renderInstallerState()}
             ${this.isProcessing ? '' : html`
               <div class="mt-4 text-right">
-                <app-button primary ?disabled=${!this.canSubmit} label="Install" btn-class="px-4 py-2 font-medium" @click=${this.onClickInstall}></app-button>
+                <lonestar-button primary ?disabled=${!this.canSubmit} label="Install" btn-class="px-4 py-2 font-medium" @click=${this.onClickInstall}></lonestar-button>
               </div>
             `}
           </form>
@@ -161,7 +161,7 @@ class AppInstallAppView extends LitElement {
       console.log(res)
       this.installerState = {status: 'installed', message: `Application installed! Redirecting...`}
       setTimeout(() => {
-        emit(this, 'navigate-to', {detail: {url: `/p/app/${res.settings.id}`}})
+        emit(this, 'navigate-to', {detail: {url: `/p/app-settings/${res.settings.id}`}})
       })
     } catch (e) {
       this.installerState = {status: 'error', message: e.toString()}
@@ -169,4 +169,4 @@ class AppInstallAppView extends LitElement {
   }
 }
 
-customElements.define('app-install-app-view', AppInstallAppView)
+customElements.define('lonestar-install-app-view', AppInstallAppView)

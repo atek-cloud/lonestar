@@ -58,7 +58,7 @@ class AppCloudView extends LitElement {
   render () {
     return html`
       <main class="min-h-screen bg-default-3">
-        <app-header></app-header>
+        <lonestar-header></lonestar-header>
         <div class="px-4 py-4">
           <h2 class="border-b border-default font-medium mb-3 pb-1 text-lg">
             <a href="/p/cloud" class="hover:underline">My Cloud</a>
@@ -101,7 +101,7 @@ class AppCloudView extends LitElement {
     if (item.type === 'system-db') {
       return html`<img class="block mx-auto mb-4" src="/img/todo.png" style="width: 40px; height: 40px">`
     }
-    if (item.type === 'app-bucket') {
+    if (item.type === 'lonestar-bucket') {
       return html`<img class="block mx-auto mb-4" src="/img/todo.png" style="width: 40px; height: 40px">`
     }*/
     return html`
@@ -114,4 +114,4 @@ class AppCloudView extends LitElement {
 
 }
 
-customElements.define('app-cloud-view', AppCloudView)
+customElements.define('lonestar-cloud-view', AppCloudView)

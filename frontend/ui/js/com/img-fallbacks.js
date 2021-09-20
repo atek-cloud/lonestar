@@ -3,11 +3,11 @@ import {LitElement, html} from '../../vendor/lit/lit.min.js'
 /*
 Usage:
 
-<app-img-fallbacks>
+<lonestar-img-fallbacks>
   <img src="/foo.png" slot="img1">
   <img src="/bar.png" slot="img2">
   <img src="/baz.png" slot="img3">
-</app-img-fallbacks>
+</lonestar-img-fallbacks>
 */
 
 export class ImgFallbacks extends LitElement {
@@ -43,4 +43,4 @@ export class ImgFallbacks extends LitElement {
   }
 }
 
-customElements.define('app-img-fallbacks', ImgFallbacks)
+customElements.define('lonestar-img-fallbacks', ImgFallbacks)

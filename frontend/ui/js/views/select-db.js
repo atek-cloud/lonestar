@@ -84,7 +84,7 @@ class AppSelectDbView extends LitElement {
           <h1 class="text-5xl mb-4">Select Database</h1>
           <div class="text-lg mb-4">
             The app
-            <a class="text-primary hover:underline" href="/p/app/${this.dbRequest?.appId}" target="_blank">${this.dbRequest?.appId}</a>
+            <a class="text-primary hover:underline" href="/p/app-settings/${this.dbRequest?.appId}" target="_blank">${this.dbRequest?.appId}</a>
             would like to access a database.
           </div>
           ${this.renderCurrentView()}
@@ -132,13 +132,13 @@ class AppSelectDbView extends LitElement {
       </div>
       <div class="flex items-center justify-between">
         <span>
-          <app-button label="Cancel" @click=${this.onClickCancelAll}></app-button>
+          <lonestar-button label="Cancel" @click=${this.onClickCancelAll}></lonestar-button>
         </span>
         <span>
           ${this.dbRequest?.params?.flags?.create ? html`
-            <app-button label="Create New" @click=${this.onClickCreate} btn-class="mr-1"></app-button>
+            <lonestar-button label="Create New" @click=${this.onClickCreate} btn-class="mr-1"></lonestar-button>
           ` : ''}
-          <app-button ?disabled=${!this.currentSelection} primary label="Select" btn-class="font-medium" @click=${this.onClickSelect}></app-button>
+          <lonestar-button ?disabled=${!this.currentSelection} primary label="Select" btn-class="font-medium" @click=${this.onClickSelect}></lonestar-button>
         </span>
       </div>
     `
@@ -161,8 +161,8 @@ class AppSelectDbView extends LitElement {
           <div class="bg-error text-error rounded p-2 mb-4">${this.error}</div>
         ` : ''}
         <div class="flex items-center justify-between">
-          <app-button label="Back" @click=${this.onClickCancelCreate}></app-button>
-          <app-button btn-type="submit" primary label="Create" btn-class="font-medium"></app-button>
+          <lonestar-button label="Back" @click=${this.onClickCancelCreate}></lonestar-button>
+          <lonestar-button btn-type="submit" primary label="Create" btn-class="font-medium"></lonestar-button>
         </div>
       </form>
     `
@@ -208,4 +208,4 @@ class AppSelectDbView extends LitElement {
   }
 }
 
-customElements.define('app-select-db-view', AppSelectDbView)
+customElements.define('lonestar-select-db-view', AppSelectDbView)

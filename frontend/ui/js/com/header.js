@@ -29,10 +29,10 @@ export class Header extends LitElement {
           </a>
         </div>
         <div class="w-full max-w-2xl mx-auto">
-          <app-search-input in-header class="block"></app-search-input>
+          <lonestar-search-input in-header class="block"></lonestar-search-input>
         </div>
         <div class="w-40 text-right">
-          <span class="inline-block mr-4"><app-button transparent icon="dots" icon-size="24" @click=${this.onClickAppsMenu}></app-button></span>
+          <span class="inline-block mr-4"><lonestar-button transparent icon="dots" icon-size="24" @click=${this.onClickAppsMenu}></lonestar-button></span>
           <img class="inline-block w-8 h-8 rounded-full" src="/img/default-user-thumb.jpg" @click=${this.onClickProfileMenu}>
         </div>
       </div>
@@ -77,4 +77,4 @@ export class Header extends LitElement {
   }
 }
 
-customElements.define('app-header', Header)
+customElements.define('lonestar-header', Header)

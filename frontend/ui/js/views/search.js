@@ -39,7 +39,7 @@ class AppSearchView extends LitElement {
   render () {
     return html`
       <main class="min-h-screen">
-        <app-header></app-header>
+        <lonestar-header></lonestar-header>
         ${this.renderSearchResults()}
       </main>
     `
@@ -91,4 +91,4 @@ class AppSearchView extends LitElement {
   }
 }
 
-customElements.define('app-search-view', AppSearchView)
+customElements.define('lonestar-search-view', AppSearchView)

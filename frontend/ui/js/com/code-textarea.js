@@ -73,4 +73,4 @@ export class CodeTextarea extends LitElement {
   }
 }
 
-customElements.define('app-code-textarea', CodeTextarea)
+customElements.define('lonestar-code-textarea', CodeTextarea)

@@ -13,7 +13,7 @@ export function create (message, type = '', time = 3000, button = null) {
 }
 
 export function destroy () {
-  var toast = document.querySelector('app-toast')
+  var toast = document.querySelector('lonestar-toast')
 
   if (toast) {
     // fadeout before removing element
@@ -119,4 +119,4 @@ Toast.styles = css`
 }
 `
 
-customElements.define('app-toast', Toast)
+customElements.define('lonestar-toast', Toast)

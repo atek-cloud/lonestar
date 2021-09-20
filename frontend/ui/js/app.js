@@ -6,8 +6,6 @@ import * as gestures from './lib/gestures.js'
 import * as theme from './lib/theme.js'
 import * as contextMenu from './com/context-menu.js'
 import { BasePopup } from './com/popups/base.js'
-import './views/app.js'
-import './views/apps.js'
 import './views/app-signin.js'
 import './views/cloud.js'
 import './views/cloud-db.js'
@@ -15,6 +13,8 @@ import './views/install-app.js'
 import './views/main.js'
 import './views/search.js'
 import './views/select-db.js'
+import './views/app-settings.js'
+import './views/settings.js'
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
@@ -178,28 +178,28 @@ class AppRoot extends LitElement {
       const cls = isCurrentView ? 'block' : 'hidden'
       switch (path) {
         case '/':
-          return html`<app-main-view id=${id} class=${cls} current-path=${path}></app-main-view>`
-        case '/p/apps':
-          return html`<app-apps-view id=${id} class=${cls} current-path=${path}></app-apps-view>`
+          return html`<lonestar-main-view id=${id} class=${cls} current-path=${path}></lonestar-main-view>`
+        case '/p/settings':
+          return html`<lonestar-settings-view id=${id} class=${cls} current-path=${path}></lonestar-settings-view>`
         case '/p/app-signin':
-          return html`<app-app-signin-view id=${id} class=${cls} current-path=${path}></app-app-signin-view>`
+          return html`<lonestar-app-signin-view id=${id} class=${cls} current-path=${path}></lonestar-app-signin-view>`
         case '/p/cloud':
-          return html`<app-cloud-view id=${id} class=${cls} current-path=${path}></app-cloud-view>`
+          return html`<lonestar-cloud-view id=${id} class=${cls} current-path=${path}></lonestar-cloud-view>`
         case '/p/install-app':
-          return html`<app-install-app-view id=${id} class=${cls} current-path=${path}></app-install-app-view>`
+          return html`<lonestar-install-app-view id=${id} class=${cls} current-path=${path}></lonestar-install-app-view>`
         case '/p/search':
-          return html`<app-search-view id=${id} class=${cls} current-path=${path}></app-search-view>`
+          return html`<lonestar-search-view id=${id} class=${cls} current-path=${path}></lonestar-search-view>`
         case '/p/select-db':
-          return html`<app-select-db-view id=${id} class=${cls} current-path=${path}></app-select-db-view>`
+          return html`<lonestar-select-db-view id=${id} class=${cls} current-path=${path}></lonestar-select-db-view>`
       }
-      if (path.startsWith('/p/app/')) {
-        return html`<app-app-view id=${id} class=${cls} current-path=${path}></app-app-view>`
+      if (path.startsWith('/p/app-settings/')) {
+        return html`<lonestar-app-settings-view id=${id} class=${cls} current-path=${path}></lonestar-app-settings-view>`
       }
       if (path.startsWith('/p/cloud/bucket/')) {
-        return html`<app-cloud-view id=${id} class=${cls} current-path=${path}></app-cloud-view>`
+        return html`<lonestar-cloud-view id=${id} class=${cls} current-path=${path}></lonestar-cloud-view>`
       }
       if (path.startsWith('/p/cloud/view/')) {
-        return html`<app-cloud-db-view id=${id} class=${cls} current-path=${path}></app-cloud-db-view>`
+        return html`<lonestar-cloud-db-view id=${id} class=${cls} current-path=${path}></lonestar-cloud-db-view>`
       }
       return html`
         <div class="bg-gray-100 min-h-screen wide">
@@ -268,4 +268,4 @@ class AppRoot extends LitElement {
   }
 }
 
-customElements.define('app-root', AppRoot)
+customElements.define('lonestar-root', AppRoot)

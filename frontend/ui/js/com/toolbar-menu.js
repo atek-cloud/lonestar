@@ -19,13 +19,13 @@ export class ToolbarMenu extends LitElement {
   render () {
     return html`
       <div class="py-2">
-        <app-button icon="plus" label="New" btn-class="text-xs leading-tight pt-1 pb-0.5 pl-1 pr-1" is-dropdown></app-button>
+        <lonestar-button icon="plus" label="New" btn-class="text-xs leading-tight pt-1 pb-0.5 pl-1 pr-1" is-dropdown></lonestar-button>
         <span class="text-default-4 mx-1">|</span>
-        <app-button icon="space" label="Space" btn-class="text-xs leading-tight pt-1 pb-0.5 pl-1 pr-1" is-dropdown></app-button>
-        <app-button transparent label="[ Access: Everyone ]" btn-class="text-xs leading-tight py-1 pl-1"></app-button>
-        <app-button transparent label="[ Authors: You ]" btn-class="text-xs leading-tight py-1 pl-1"></app-button>
+        <lonestar-button icon="space" label="Space" btn-class="text-xs leading-tight pt-1 pb-0.5 pl-1 pr-1" is-dropdown></lonestar-button>
+        <lonestar-button transparent label="[ Access: Everyone ]" btn-class="text-xs leading-tight py-1 pl-1"></lonestar-button>
+        <lonestar-button transparent label="[ Authors: You ]" btn-class="text-xs leading-tight py-1 pl-1"></lonestar-button>
         <span class="text-default-4 mx-1">|</span>
-        <app-button icon="share" label="Share" btn-class="text-xs leading-tight pt-1 pb-0.5 pl-1 pr-2"></app-button>
+        <lonestar-button icon="share" label="Share" btn-class="text-xs leading-tight pt-1 pb-0.5 pl-1 pr-2"></lonestar-button>
       </div>
     `
   }
@@ -35,4 +35,4 @@ export class ToolbarMenu extends LitElement {
 
 }
 
-customElements.define('app-toolbar-menu', ToolbarMenu)
+customElements.define('lonestar-toolbar-menu', ToolbarMenu)

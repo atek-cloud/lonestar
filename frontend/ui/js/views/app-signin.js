@@ -51,7 +51,7 @@ class AppAppSigninView extends LitElement {
           <h1 class="text-5xl mb-4">Login</h1>
           <div class="text-lg mb-4">
             The app
-            <a class="text-primary hover:underline" href="/p/app/${this.session?.appId}" target="_blank">${this.session?.appId}</a>
+            <a class="text-primary hover:underline" href="/p/app-settings/${this.session?.appId}" target="_blank">${this.session?.appId}</a>
             would like to sign into a profile.
           </div>
           ${this.renderCurrentView()}
@@ -82,12 +82,12 @@ class AppAppSigninView extends LitElement {
               <div>${p.label}</div>
             </div>
           `)}
-          <app-button btn-class="block w-full text-center mt-2" label="Create new profile" @click=${this.onClickCreate}></app-button>
+          <lonestar-button btn-class="block w-full text-center mt-2" label="Create new profile" @click=${this.onClickCreate}></lonestar-button>
         ` : html`
           <div class="px-6 py-4 bg-default-2 rounded mb-2">
             You have not created any user profiles yet.
           </div>
-          <app-button primary btn-class="block w-full text-center font-medium" label="Create a profile" @click=${this.onClickCreate}></app-button>
+          <lonestar-button primary btn-class="block w-full text-center font-medium" label="Create a profile" @click=${this.onClickCreate}></lonestar-button>
         `}
       ` : html`
         <div><span class="spinner"></span></div>
@@ -129,8 +129,8 @@ class AppAppSigninView extends LitElement {
           <div class="bg-error text-error rounded p-2 mb-4">${this.error}</div>
         ` : ''}
         <div class="flex items-center justify-between">
-          <app-button label="Cancel" @click=${this.onClickCancelCreate}></app-button>
-          <app-button btn-type="submit" primary label="Create" btn-class="font-medium"></app-button>
+          <lonestar-button label="Cancel" @click=${this.onClickCancelCreate}></lonestar-button>
+          <lonestar-button btn-type="submit" primary label="Create" btn-class="font-medium"></lonestar-button>
         </div>
       </form>
     `
@@ -175,4 +175,4 @@ class AppAppSigninView extends LitElement {
   }
 }
 
-customElements.define('app-app-signin-view', AppAppSigninView)
+customElements.define('lonestar-app-signin-view', AppAppSigninView)

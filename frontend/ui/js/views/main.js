@@ -1,6 +1,7 @@
 import { LitElement, html } from '../../vendor/lit/lit.min.js'
 import { repeat } from '../../vendor/lit/directives/repeat.js'
 import * as session from '../lib/session.js'
+import { getServiceUrl } from '../lib/services.js'
 import * as appsMenu from '../com/menus/apps.js'
 import '../com/button.js'
 import '../com/img-fallbacks.js'
@@ -58,11 +59,11 @@ class AppMainView extends LitElement {
     const srvColCount = Math.min((this.activeServices.length || 0) + 3, 5)
     return html`
       <main class="min-h-screen">
-        <app-header></app-header>
+        <lonestar-header></lonestar-header>
         <div style="margin-top: calc(20vh - 40px)">
           <div class="grid gap-12 justify-center max-w-2xl mx-auto text-sm" style="grid-template-columns: repeat(${srvColCount}, auto)">
             ${repeat(this.activeServices, srv => srv.id, (srv, i) => html`
-              <a class="block w-24 text-center" href="http://${srv.settings.id}.localhost/">
+              <a class="block w-24 text-center" href="${getServiceUrl(srv)}">
                 <div class="mx-auto bg-gray-100 rounded-full" style="width: 70px; height: 70px; padding: 15px">
                   <img src="/img/todo.png" style="width: 40px; height: 40px">
                 </div>
@@ -81,7 +82,7 @@ class AppMainView extends LitElement {
               </div>
               <span class="inline-block w-full truncate pt-3">My Data</span>
             </a>
-            <a class="block w-24 text-center" href="/p/apps">
+            <a class="block w-24 text-center" href="/p/settings">
               <div class="mx-auto bg-gray-100 rounded-full" style="width: 70px; height: 70px; padding: 15px">
                 <img src="/img/icons/settings.png" srcset="/img/icons/settings.png 1x, /img/icons/settings@2x.png 2x" style="width: 40px; height: 40px">
               </div>
@@ -113,4 +114,4 @@ class AppMainView extends LitElement {
   }
 }
 
-customElements.define('app-main-view', AppMainView)
+customElements.define('lonestar-main-view', AppMainView)

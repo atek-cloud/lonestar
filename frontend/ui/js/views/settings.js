@@ -6,7 +6,7 @@ import * as contextMenu from '../com/context-menu.js'
 import '../com/header.js'
 import '../com/button.js'
 
-class AppAppsView extends LitElement {
+class AppSettingsView extends LitElement {
   static get properties () {
     return {
       currentPath: {type: String, attribute: 'current-path'},
@@ -50,10 +50,10 @@ class AppAppsView extends LitElement {
   render () {
     return html`
       <main class="min-h-screen bg-default-3">
-        <app-header></app-header>
+        <lonestar-header></lonestar-header>
         <div class="max-w-4xl my-8 mx-auto bg-default rounded px-6 py-4">
           <div class="mb-6">
-            <app-button label="Install New App" href="/p/install-app"></app-button>
+            <lonestar-button label="Install New App" href="/p/install-app"></lonestar-button>
           </div>
           <h1 class="text-2xl mb-6">Apps</h1>
           ${this.renderServicesList(this.apps)}
@@ -76,7 +76,7 @@ class AppAppsView extends LitElement {
         ${repeat(services, srv => srv.settings.id, (srv, i) => html`
           <div class="flex items-center px-2 py-1 ${i !== 0 ? 'border-t border-default' : ''}">
             <img class="w-4 h-4 mr-2" src="/img/todo.png">
-            <a class="mr-auto hover:underline" href="/p/app/${srv.settings.id}">${srv.settings.manifest?.name || srv.settings.id}</a>
+            <a class="mr-auto hover:underline" href="/p/app-settings/${srv.settings.id}">${srv.settings.manifest?.name || srv.settings.id}</a>
             ${this.renderAppUpdater(srv.settings.id)}
             <span class="text-gray-600">${srv.settings.package.sourceType === 'git' ? srv.settings.package.installedVersion : 'Local folder'}</span>
             <span class="inline-block">
@@ -103,7 +103,7 @@ class AppAppsView extends LitElement {
         ${this.updaterStates[id].message}
         ${this.updaterStates[id].status === 'update-available' ? html`
           <span class="ml-2">
-            <app-button label="Install Now" btn-class="bg-secondary text-inverse hover:bg-secondary-2 border border-inverse" @click=${e => this.onClickInstallUpdate(e, id)}></app-button>
+            <lonestar-button label="Install Now" btn-class="bg-secondary text-inverse hover:bg-secondary-2 border border-inverse" @click=${e => this.onClickInstallUpdate(e, id)}></lonestar-button>
           </span>
         ` : ''}
       </div>
@@ -122,7 +122,7 @@ class AppAppsView extends LitElement {
     if (srv.settings.package.sourceType === 'git') {
       items.push({label: 'Check for updates', click: () => this.onClickCheckUpdates(undefined, srv.settings.id)})
     }
-    items.push({label: 'Details', click: () => emit(el, 'navigate-to', {detail: {url: `/p/app/${srv.settings.id}`}})})
+    items.push({label: 'Details', click: () => emit(el, 'navigate-to', {detail: {url: `/p/app-settings/${srv.settings.id}`}})})
     items.push({label: 'Uninstall', click: () => this.onClickUninstallApp(undefined, srv.settings.id)})
 
     contextMenu.create({
@@ -199,4 +199,4 @@ class AppAppsView extends LitElement {
   }
 }
 
-customElements.define('app-apps-view', AppAppsView)
+customElements.define('lonestar-settings-view', AppSettingsView)

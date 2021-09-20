@@ -75,7 +75,7 @@ export function create (opts) {
 }
 
 export function destroy (value) {
-  const el = document.querySelector('app-context-menu')
+  const el = document.querySelector('lonestar-context-menu')
   if (el) {
     el.parentNode.removeChild(el)
     document.removeEventListener('keyup', onKeyUp)
@@ -97,7 +97,7 @@ function onKeyUp (e) {
 }
 
 function onClickAnywhere (e) {
-  if (!findParent(e.target, el => el.tagName === 'APP-CONTEXT-MENU')) {
+  if (!findParent(e.target, el => el.tagName === 'LONESTAR-CONTEXT-MENU')) {
     // click is outside the context-menu, destroy
     destroy()
   }
@@ -532,4 +532,4 @@ a.dropdown-item {
 }
 `
 
-customElements.define('app-context-menu', ContextMenu)
+customElements.define('lonestar-context-menu', ContextMenu)

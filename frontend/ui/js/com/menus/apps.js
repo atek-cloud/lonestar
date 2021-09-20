@@ -1,6 +1,7 @@
 import { LitElement, html } from '../../../vendor/lit/lit.min.js'
 import { repeat } from '../../../vendor/lit/directives/repeat.js'
 import * as session from '../../lib/session.js'
+import { getServiceUrl } from '../../lib/services.js'
 import * as contextMenu from '../context-menu.js'
 import '../button.js'
 
@@ -11,7 +12,7 @@ export function create ({parent, x, y}) {
     y,
     render () {
       return html`
-        <app-apps-menu></app-apps-menu>
+        <lonestar-apps-menu></lonestar-apps-menu>
       `
     }
   })
@@ -81,12 +82,12 @@ export class AppsMenu extends LitElement {
       <div class="container">
         ${this.services ? html`
           ${repeat(this.activeServices, srv => srv.id, (srv, i) => html`
-            <a class="block text-center" href="http://${srv.settings.id}.localhost/">
+            <a class="block text-center" href=${getServiceUrl(srv)}>
               <img src="/img/todo.png">
               <span>${srv.settings.manifest?.name || srv.settings.id}</span>
             </a>
           `)}
-          <a class="block text-center" href="/p/install-app">
+          <a class="block text-center" href="/p/install-lonestar">
             <img src="/img/icons/install@2x.png">
             <span>Install App</span>
           </a>
@@ -94,7 +95,7 @@ export class AppsMenu extends LitElement {
             <img src="/img/icons/cloud@2x.png">
             <span>My Data</span>
           </a>
-          <a class="block text-center" href="/p/apps">
+          <a class="block text-center" href="/p/settings">
             <img src="/img/icons/settings@2x.png">
             <span>Settings</span>
           </a>
@@ -107,4 +108,4 @@ export class AppsMenu extends LitElement {
   // =
 }
 
-customElements.define('app-apps-menu', AppsMenu)
+customElements.define('lonestar-apps-menu', AppsMenu)

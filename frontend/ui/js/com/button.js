@@ -107,4 +107,4 @@ export class Button extends LitElement {
   }
 }
 
-customElements.define('app-button', Button)
+customElements.define('lonestar-button', Button)

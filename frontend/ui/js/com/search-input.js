@@ -6,7 +6,7 @@ import * as icons from '../com/icons.js'
 
 const LINKS = [
   {
-    href: '/p/install-app',
+    href: '/p/install-lonestar',
     img: '/img/icons/install@2x.png',
     title: 'Install App'
   },
@@ -16,7 +16,7 @@ const LINKS = [
     title: 'My Data'
   },
   {
-    href: '/p/apps',
+    href: '/p/settings',
     img: '/img/icons/settings@2x.png',
     title: 'Settings'
   }
@@ -197,4 +197,4 @@ export class SearchInput extends LitElement {
   }
 }
 
-customElements.define('app-search-input', SearchInput)
+customElements.define('lonestar-search-input', SearchInput)
