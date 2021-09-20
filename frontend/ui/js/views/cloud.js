@@ -6,7 +6,7 @@ import * as contextMenu from '../com/context-menu.js'
 import '../com/header.js'
 import '../com/button.js'
 
-class AppCloudView extends LitElement {
+class CloudView extends LitElement {
   static get properties () {
     return {
       currentPath: {type: String, attribute: 'current-path'},
@@ -114,4 +114,4 @@ class AppCloudView extends LitElement {
 
 }
 
-customElements.define('lonestar-cloud-view', AppCloudView)
+customElements.define('lonestar-cloud-view', CloudView)

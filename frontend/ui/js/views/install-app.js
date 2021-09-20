@@ -4,7 +4,7 @@ import { emit } from '../lib/dom.js'
 import '../com/button.js'
 import '../com/header.js'
 
-class AppInstallAppView extends LitElement {
+class InstallAppView extends LitElement {
   static get properties () {
     return {
       currentPath: {type: String, attribute: 'current-path'},
@@ -169,4 +169,4 @@ class AppInstallAppView extends LitElement {
   }
 }
 
-customElements.define('lonestar-install-app-view', AppInstallAppView)
+customElements.define('lonestar-install-app-view', InstallAppView)

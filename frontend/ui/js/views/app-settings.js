@@ -9,7 +9,7 @@ import '../com/header.js'
 
 const TIMESTAMP_RE = /( (\d)+\/(\d)+\/(\d)+, (\d)+:(\d)+:(\d)+ (AM|PM))/g
 
-class AppAppSettingsView extends LitElement {
+class AppSettingsView extends LitElement {
   static get properties () {
     return {
       srvId: {type: String},
@@ -359,4 +359,4 @@ class AppAppSettingsView extends LitElement {
   }
 }
 
-customElements.define('lonestar-app-settings-view', AppAppSettingsView)
+customElements.define('lonestar-app-settings-view', AppSettingsView)

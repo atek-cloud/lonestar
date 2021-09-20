@@ -6,6 +6,8 @@ import * as gestures from './lib/gestures.js'
 import * as theme from './lib/theme.js'
 import * as contextMenu from './com/context-menu.js'
 import { BasePopup } from './com/popups/base.js'
+import './views/app-settings.js'
+import './views/app-frame.js'
 import './views/app-signin.js'
 import './views/cloud.js'
 import './views/cloud-db.js'
@@ -13,7 +15,6 @@ import './views/install-app.js'
 import './views/main.js'
 import './views/search.js'
 import './views/select-db.js'
-import './views/app-settings.js'
 import './views/settings.js'
 
 if ('serviceWorker' in navigator) {
@@ -191,6 +192,9 @@ class AppRoot extends LitElement {
           return html`<lonestar-search-view id=${id} class=${cls} current-path=${path}></lonestar-search-view>`
         case '/p/select-db':
           return html`<lonestar-select-db-view id=${id} class=${cls} current-path=${path}></lonestar-select-db-view>`
+      }
+      if (path.startsWith('/app/')) {
+        return html`<lonestar-app-frame-view id=${id} class=${cls} current-path=${path}></lonestar-app-frame-view>`
       }
       if (path.startsWith('/p/app-settings/')) {
         return html`<lonestar-app-settings-view id=${id} class=${cls} current-path=${path}></lonestar-app-settings-view>`

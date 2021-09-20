@@ -7,7 +7,7 @@ import { joinPath } from '../lib/strings.js'
 import '../com/header.js'
 import '../com/button.js'
 
-class AppCloudDbView extends LitElement {
+class CloudDbView extends LitElement {
   static get properties () {
     return {
       currentPath: {type: String, attribute: 'current-path'},
@@ -335,7 +335,7 @@ class AppCloudDbView extends LitElement {
   }
 }
 
-customElements.define('lonestar-cloud-db-view', AppCloudDbView)
+customElements.define('lonestar-cloud-db-view', CloudDbView)
 
 function getTableTitle (table) {
   return table?.templates?.table?.title || table.tableId.split('/')[1]

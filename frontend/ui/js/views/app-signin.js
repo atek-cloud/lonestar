@@ -3,7 +3,7 @@ import { repeat } from '../../vendor/lit/directives/repeat.js'
 import * as session from '../lib/session.js'
 import '../com/button.js'
 
-class AppAppSigninView extends LitElement {
+class AppSigninView extends LitElement {
   static get properties () {
     return {
       currentPath: {type: String, attribute: 'current-path'},
@@ -175,4 +175,4 @@ class AppAppSigninView extends LitElement {
   }
 }
 
-customElements.define('lonestar-app-signin-view', AppAppSigninView)
+customElements.define('lonestar-app-signin-view', AppSigninView)

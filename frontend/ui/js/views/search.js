@@ -5,7 +5,7 @@ import * as session from '../lib/session.js'
 import '../com/button.js'
 import '../com/header.js'
 
-class AppSearchView extends LitElement {
+class SearchView extends LitElement {
   static get properties () {
     return {
       currentPath: {type: String, attribute: 'current-path'},
@@ -91,4 +91,4 @@ class AppSearchView extends LitElement {
   }
 }
 
-customElements.define('lonestar-search-view', AppSearchView)
+customElements.define('lonestar-search-view', SearchView)

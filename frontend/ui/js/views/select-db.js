@@ -4,7 +4,7 @@ import * as session from '../lib/session.js'
 import { joinPath } from '../lib/strings.js'
 import '../com/button.js'
 
-class AppSelectDbView extends LitElement {
+class SelectDbView extends LitElement {
   static get properties () {
     return {
       currentPath: {type: String, attribute: 'current-path'},
@@ -208,4 +208,4 @@ class AppSelectDbView extends LitElement {
   }
 }
 
-customElements.define('lonestar-select-db-view', AppSelectDbView)
+customElements.define('lonestar-select-db-view', SelectDbView)

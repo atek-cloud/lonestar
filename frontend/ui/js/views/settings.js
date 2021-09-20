@@ -6,7 +6,7 @@ import * as contextMenu from '../com/context-menu.js'
 import '../com/header.js'
 import '../com/button.js'
 
-class AppSettingsView extends LitElement {
+class SettingsView extends LitElement {
   static get properties () {
     return {
       currentPath: {type: String, attribute: 'current-path'},
@@ -199,4 +199,4 @@ class AppSettingsView extends LitElement {
   }
 }
 
-customElements.define('lonestar-settings-view', AppSettingsView)
+customElements.define('lonestar-settings-view', SettingsView)

@@ -8,7 +8,7 @@ import '../com/img-fallbacks.js'
 import '../com/subnav.js'
 import '../com/search-input.js'
 
-class AppMainView extends LitElement {
+class MainView extends LitElement {
   static get properties () {
     return {
       currentPath: {type: String, attribute: 'current-path'},
@@ -114,4 +114,4 @@ class AppMainView extends LitElement {
   }
 }
 
-customElements.define('lonestar-main-view', AppMainView)
+customElements.define('lonestar-main-view', MainView)
