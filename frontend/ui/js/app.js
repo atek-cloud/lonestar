@@ -9,8 +9,6 @@ import { BasePopup } from './com/popups/base.js'
 import './views/app-settings.js'
 import './views/app-frame.js'
 import './views/app-signin.js'
-import './views/cloud.js'
-import './views/cloud-db.js'
 import './views/install-app.js'
 import './views/main.js'
 import './views/search.js'
@@ -184,8 +182,6 @@ class AppRoot extends LitElement {
           return html`<lonestar-settings-view id=${id} class=${cls} current-path=${path}></lonestar-settings-view>`
         case '/p/app-signin':
           return html`<lonestar-app-signin-view id=${id} class=${cls} current-path=${path}></lonestar-app-signin-view>`
-        case '/p/cloud':
-          return html`<lonestar-cloud-view id=${id} class=${cls} current-path=${path}></lonestar-cloud-view>`
         case '/p/install-app':
           return html`<lonestar-install-app-view id=${id} class=${cls} current-path=${path}></lonestar-install-app-view>`
         case '/p/search':
@@ -198,12 +194,6 @@ class AppRoot extends LitElement {
       }
       if (path.startsWith('/p/app-settings/')) {
         return html`<lonestar-app-settings-view id=${id} class=${cls} current-path=${path}></lonestar-app-settings-view>`
-      }
-      if (path.startsWith('/p/cloud/bucket/')) {
-        return html`<lonestar-cloud-view id=${id} class=${cls} current-path=${path}></lonestar-cloud-view>`
-      }
-      if (path.startsWith('/p/cloud/view/')) {
-        return html`<lonestar-cloud-db-view id=${id} class=${cls} current-path=${path}></lonestar-cloud-db-view>`
       }
       return html`
         <div class="bg-gray-100 min-h-screen wide">
@@ -239,7 +229,7 @@ class AppRoot extends LitElement {
         anchor = el
       }
     }
-    if (!anchor) return
+    if (!anchor || anchor.download) return
 
     const href = anchor.getAttribute('href')
     if (href === null) return

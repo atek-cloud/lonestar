@@ -40,7 +40,7 @@ export class AppsMenu extends LitElement {
   }
 
   get activeServices () {
-    return (this.services || []).filter(srv => srv.status === 'active' && !srv.settings.id.startsWith('core.'))
+    return (this.services || []).filter(srv => srv.status === 'active' && !srv.settings.id.startsWith('core.') && srv.settings.id !== 'lonestar')
   }
 
   // rendering
@@ -69,7 +69,7 @@ export class AppsMenu extends LitElement {
           display: block;
           width: 40px;
           height: 40px;
-          object-fit: cover;
+          object-fit: contain;
           margin: 0 auto 10px;
         }
         .container a span {
@@ -87,16 +87,16 @@ export class AppsMenu extends LitElement {
               <span>${srv.settings.manifest?.name || srv.settings.id}</span>
             </a>
           `)}
+          <a class="block text-center" href="/app/core.adb">
+            <img src="/img/icons/database.svg">
+            <span>Atek DB</span>
+          </a>
           <a class="block text-center" href="/p/install-lonestar">
-            <img src="/img/icons/install@2x.png">
+            <img src="/img/icons/install.svg">
             <span>Install App</span>
           </a>
-          <a class="block text-center" href="/p/cloud">
-            <img src="/img/icons/cloud@2x.png">
-            <span>My Data</span>
-          </a>
           <a class="block text-center" href="/p/settings">
-            <img src="/img/icons/settings@2x.png">
+            <img src="/img/icons/settings.svg">
             <span>Settings</span>
           </a>
         ` : ''}

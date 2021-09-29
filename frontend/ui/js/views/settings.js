@@ -1,5 +1,6 @@
 import { LitElement, html } from '../../vendor/lit/lit.min.js'
 import { repeat } from '../../vendor/lit/directives/repeat.js'
+import { getServiceUrl } from '../lib/services.js'
 import * as session from '../lib/session.js'
 import { emit } from '../lib/dom.js'
 import * as contextMenu from '../com/context-menu.js'
@@ -76,7 +77,7 @@ class SettingsView extends LitElement {
         ${repeat(services, srv => srv.settings.id, (srv, i) => html`
           <div class="flex items-center px-2 py-1 ${i !== 0 ? 'border-t border-default' : ''}">
             <img class="w-4 h-4 mr-2" src="/img/todo.png">
-            <a class="mr-auto hover:underline" href="/p/app-settings/${srv.settings.id}">${srv.settings.manifest?.name || srv.settings.id}</a>
+            <a class="mr-auto hover:underline" href=${getServiceUrl(srv)}>${srv.settings.manifest?.name || srv.settings.id}</a>
             ${this.renderAppUpdater(srv.settings.id)}
             <span class="text-gray-600">${srv.settings.package.sourceType === 'git' ? srv.settings.package.installedVersion : 'Local folder'}</span>
             <span class="inline-block">

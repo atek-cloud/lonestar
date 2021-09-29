@@ -37,7 +37,7 @@ class MainView extends LitElement {
   }
 
   get activeServices () {
-    return (this.services || []).filter(srv => srv.status === 'active' && !srv.settings.id.startsWith('core.'))
+    return (this.services || []).filter(srv => srv.status === 'active' && !srv.settings.id.startsWith('core.') && srv.settings.id !== 'lonestar')
   }
 
   // rendering
@@ -70,21 +70,21 @@ class MainView extends LitElement {
                 <span class="inline-block w-full truncate pt-3">${srv.settings.manifest?.name || srv.settings.id}</span>
               </a>
             `)}
+            <a class="block w-24 text-center" href="/app/core.adb">
+              <div class="mx-auto bg-gray-100 rounded-full" style="width: 70px; height: 70px; padding: 15px">
+                <img src="/img/icons/database.svg" style="width: 40px; height: 40px">
+              </div>
+              <span class="inline-block w-full truncate pt-3">Atek DB</span>
+            </a>
             <a class="block w-24 text-center" href="/p/install-app">
               <div class="mx-auto bg-gray-100 rounded-full" style="width: 70px; height: 70px; padding: 15px">
-                <img src="/img/icons/install.png" srcset="/img/icons/install.png 1x, /img/icons/install@2x.png 2x" style="width: 40px; height: 40px">
+                <img src="/img/icons/install.svg" style="width: 40px; height: 40px">
               </div>
               <span class="inline-block w-full truncate pt-3">Install App</span>
             </a>
-            <a class="block w-24 text-center" href="/p/cloud">
-              <div class="mx-auto bg-gray-100 rounded-full" style="width: 70px; height: 70px; padding: 15px">
-                <img src="/img/icons/cloud.png" srcset="/img/icons/cloud.png 1x, /img/icons/cloud@2x.png 2x" style="width: 40px; height: 40px">
-              </div>
-              <span class="inline-block w-full truncate pt-3">My Data</span>
-            </a>
             <a class="block w-24 text-center" href="/p/settings">
               <div class="mx-auto bg-gray-100 rounded-full" style="width: 70px; height: 70px; padding: 15px">
-                <img src="/img/icons/settings.png" srcset="/img/icons/settings.png 1x, /img/icons/settings@2x.png 2x" style="width: 40px; height: 40px">
+                <img src="/img/icons/settings.svg" style="width: 40px; height: 40px">
               </div>
               <span class="inline-block w-full truncate pt-3">Settings</span>
             </a>

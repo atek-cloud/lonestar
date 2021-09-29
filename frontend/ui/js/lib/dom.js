@@ -29,6 +29,27 @@ export function emit (el, evt, opts = {}) {
   el.dispatchEvent(new CustomEvent(evt, opts))
 }
 
+export function downloadBlob (blob, name = 'file.txt') {
+  const blobUrl = URL.createObjectURL(blob)
+  const link = document.createElement("a")
+  link.href = blobUrl
+  link.download = name
+  document.body.appendChild(link)
+  console.log(blobUrl, name)
+
+  // Dispatch click event on the link
+  // This is necessary as link.click() does not work on the latest firefox
+  link.dispatchEvent(
+    new MouseEvent('click', { 
+      bubbles: true, 
+      cancelable: true, 
+      view: window 
+    })
+  )
+
+  document.body.removeChild(link)
+}
+
 /*!
  * Dynamically changing favicons with JavaScript
  * Works in all A-grade browsers except Safari and Internet Explorer

@@ -16,6 +16,10 @@ export function shorten (str, n = 6) {
   return str
 }
 
+export function shortenHash (str, n = 6) {
+  return `${str.slice(0, 6)}..${str.slice(-2)}`
+}
+
 export function joinPath (...args) {
   var str = args[0]
   for (let v of args.slice(1)) {

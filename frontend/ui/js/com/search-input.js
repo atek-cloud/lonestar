@@ -11,11 +11,6 @@ const LINKS = [
     title: 'Install App'
   },
   {
-    href: '/p/cloud',
-    img: '/img/icons/cloud@2x.png',
-    title: 'My Data'
-  },
-  {
     href: '/p/settings',
     img: '/img/icons/settings@2x.png',
     title: 'Settings'

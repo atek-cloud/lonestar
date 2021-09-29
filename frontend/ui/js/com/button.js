@@ -13,8 +13,10 @@ export class Button extends LitElement {
       btnClass: {type: String, attribute: 'btn-class'},
       btnStyle: {type: String, attribute: 'btn-style'},
       disabled: {type: Boolean},
+      download: {type: String},
       isDropdown: {type: Boolean, attribute: 'is-dropdown'},
-      spinner: {type: Boolean}
+      spinner: {type: Boolean},
+      groupPos: {type: String, attribute: 'group-pos'}
     }
   }
 
@@ -27,6 +29,7 @@ export class Button extends LitElement {
     this.btnClass = ''
     this.btnStyle = undefined
     this.isDropdown = false
+    this.groupPos = undefined
   }
 
   getClass () {
@@ -44,19 +47,27 @@ export class Button extends LitElement {
       }
     } else if (this.disabled) {
       colors = 'bg-default-2 text-default-3'
+    } else if (this.hasAttribute('color')) {
+      colors = `bg-${this.getAttribute('color')}-600 hover:bg-${this.getAttribute('color')}-500 text-white`
     }
     
     let paddings = ''
     if (!/p(x|l|r)?-/.test(parentClass)) paddings += 'px-2 '
     if (!/p(y|t|b)?-/.test(parentClass)) paddings += 'py-1'
 
+    let rounding = 'rounded'
+    let borderpos = 'border'
+    if (this.groupPos === 'start') { rounding = 'rounded-l'; borderpos += ' border-r-0' }
+    if (this.groupPos === 'end') rounding = 'rounded-r'
+    if (this.groupPos === 'mid') { rounding = ''; borderpos += ' border-r-0' }
+
     let shadow = 'shadow-sm'
-    let borders = `border border-gray-300`
+    let borders = `${borderpos} border-gray-300`
     if (/border/.test(parentClass)) borders = ''
-    else if (this.hasAttribute('primary')) borders = 'border border-blue-800'
+    else if (this.hasAttribute('primary')) borders = `${borderpos} border-blue-800`
     else if (this.hasAttribute('transparent')) { borders = ''; shadow = '' }
-    else if (this.hasAttribute('color')) borders = `border border-${this.getAttribute('color')}-800`
-    return `rounded ${colors} ${paddings} ${borders} ${shadow} ${parentClass} ${this.disabled ? 'cursor-default' : ''}`
+    else if (this.hasAttribute('color')) borders = `${borderpos} border-${this.getAttribute('color')}-800`
+    return `${rounding} ${colors} ${paddings} ${borders} ${shadow} ${parentClass} ${this.disabled ? 'cursor-default' : ''}`
   }
 
   renderSpinner () {
@@ -91,6 +102,7 @@ export class Button extends LitElement {
           target=${this.newWindow ? '_blank' : ''}
           class="inline-block ${this.getClass()}"
           ?disabled=${this.disabled}
+          download=${ifDefined(this.download)}
           style=${ifDefined(this.btnStyle)}
         >${this.spinner ? this.renderSpinner() : this.renderLabel()}</a>
       `
@@ -108,3 +120,23 @@ export class Button extends LitElement {
 }
 
 customElements.define('lonestar-button', Button)
+
+export class ButtonGroup extends LitElement {
+  render () {
+    return html`
+      <slot @slotchange=${this.onSlotChange}></slot>
+    `
+  }
+
+  onSlotChange (e) {
+    const childNodes = Array.from(e.target.assignedNodes({flatten: true})).filter(el => el.tagName === 'LONESTAR-BUTTON')
+    if (childNodes.length === 0) childNodes[0].groupPos = undefined
+    for (let i = 0; i < childNodes.length; i++) {
+      if (i === 0) childNodes[i].groupPos = 'start'
+      else if (i === childNodes.length - 1) childNodes[i].groupPos = 'end'
+      else childNodes[i].groupPos = 'mid'
+    }
+  }
+}
+
+customElements.define('lonestar-button-group', ButtonGroup)

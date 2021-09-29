@@ -25,7 +25,7 @@ export class Header extends LitElement {
       <div class="flex items-center pr-5 pl-4 py-2 text-default-2 text-lg bg-default border-b border-default-2 relative z-10">
         <div class="w-40">
           <a class="cursor-pointer" href="/">
-            <img src="/img/logo-sm.png" srcset="/img/logo-sm.png 1x, /img/logo-sm@2x.png 2x" style="width: 32px">
+            <img src="/img/logo.svg" style="width: 32px">
           </a>
         </div>
         <div class="w-full max-w-2xl mx-auto">
