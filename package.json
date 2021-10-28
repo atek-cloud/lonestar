@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/atek-cloud/lonestar#readme",
   "dependencies": {
-    "@atek-cloud/adb-api": "^1.1.0",
+    "@atek-cloud/adb-api": "^2.0.0",
     "@atek-cloud/node-rpc": "^4.2.0",
     "@atek-cloud/services-api": "^1.0.0",
     "@atek-cloud/user-sessions-api": "^1.0.0",
