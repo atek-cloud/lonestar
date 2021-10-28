@@ -16,10 +16,12 @@ const apiServer = createRpcServer({
     services_checkForPackageUpdates: (id) => services.checkForPackageUpdates(id),
     services_updatePackage: (id) => services.updatePackage(id),
     services_configure: (id, updates) => services.configure(id, updates),
-    async adb_adminListDbsByOwningUser(userKey) {
-        const res = await adb.api.adminListDbsByOwningUser(userKey || this.req.headers['atek-auth-user']);
-        return res;
+    adb_adminListDbsByOwningUser(userKey) {
+        return adb.api.adminListDbsByOwningUser(userKey || this.req.headers['atek-auth-user']);
     },
+    // adminCreateDetachedDb (opts) {
+    //   return adb.api.adminCreateDetachedDb(opts)
+    // },
     adb_dbDescribe: (dbId) => adb.api.dbDescribe(dbId),
     adb_recordList: (dbId, path, opts) => adb.api.recordList(dbId, path, opts),
     adb_recordGet: (dbId, path) => adb.api.recordGet(dbId, path),

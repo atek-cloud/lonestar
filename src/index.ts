@@ -23,9 +23,9 @@ const apiServer = createRpcServer({
   adb_adminListDbsByOwningUser (userKey?: string) {
     return adb.api.adminListDbsByOwningUser(userKey || this.req.headers['atek-auth-user'])
   },
-  adminCreateDetachedDb (opts) {
-    return adb.api.adminCreateDetachedDb(opts)
-  },
+  // adminCreateDetachedDb (opts) {
+  //   return adb.api.adminCreateDetachedDb(opts)
+  // },
 
   adb_dbDescribe: (dbId) => adb.api.dbDescribe(dbId),
   adb_recordList: (dbId, path, opts) => adb.api.recordList(dbId, path, opts),
